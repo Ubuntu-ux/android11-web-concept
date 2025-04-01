@@ -20,6 +20,7 @@ body {
   position: fixed;
   width: 100%;
   touch-action: manipulation;
+  transition: background-color 0.3s ease;
 }
 
 :root {
@@ -37,6 +38,23 @@ body {
   --navigation-bar-height: 48px;
   --dock-height: 72px;
   --font-primary: 'Inter', 'Roboto', sans-serif;
+  
+  /* Dark Theme Variables */
+  --dark-background: #121212;
+  --dark-surface: #1E1E1E;
+  --dark-primary: #BB86FC;
+  --dark-secondary: #03DAC6;
+  --dark-error: #CF6679;
+  --dark-text-primary: rgba(255, 255, 255, 0.87);
+  --dark-text-secondary: rgba(255, 255, 255, 0.6);
+  --dark-text-disabled: rgba(255, 255, 255, 0.38);
+  --dark-divider: rgba(255, 255, 255, 0.12);
+}
+
+/* Dark mode base styles */
+body.dark-mode {
+  background-color: var(--dark-background);
+  color: var(--dark-text-primary);
 }
 
 .android-phone {
@@ -52,6 +70,11 @@ body {
   font-family: var(--font-primary);
   font-weight: 400;
   letter-spacing: -0.01em;
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode .android-phone {
+  background-color: var(--dark-background);
 }
 
 /* Status Bar */
@@ -139,8 +162,17 @@ body {
   color: white;
 }
 
+body.dark-mode .btn-primary {
+  background-color: var(--dark-primary);
+  color: #000;
+}
+
 .btn-primary:active {
   background-color: #3b78e7;
+}
+
+body.dark-mode .btn-primary:active {
+  background-color: #9866da;
 }
 
 /* Media query for actual mobile devices */
@@ -160,27 +192,94 @@ body {
   }
 }
 
-/* Dark mode styles */
+/* Improved Dark mode styles */
+body.dark-mode .home-screen {
+  background-image: url('https://1.bp.blogspot.com/-V4Dbm9Z_Sss/XvCpKl-b0SI/AAAAAAAAB4M/wKoUCy1DkWAejwGo-f1-q4eWB3yqRV6fQCK4BGAYYCw/s1600/android%2B11%2Bwallpaper%2B2.png');
+  background-size: cover;
+  background-position: center;
+}
+
 body.dark-mode .settings-screen,
 body.dark-mode .about-phone-screen,
 body.dark-mode .language-screen {
-  background-color: #121212;
-  color: rgba(255, 255, 255, 0.87);
+  background-color: var(--dark-background);
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode .settings-header,
+body.dark-mode .about-phone-logo {
+  background-color: var(--dark-surface);
 }
 
 body.dark-mode .settings-item,
 body.dark-mode .about-info-item,
 body.dark-mode .language-item {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--dark-divider);
 }
 
 body.dark-mode .settings-item-subtitle,
 body.dark-mode .about-info-label,
 body.dark-mode .language-native {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--dark-text-secondary);
 }
 
 body.dark-mode .settings-item:active,
 body.dark-mode .language-item:active {
-  background-color: rgba(255, 255, 255, 0.05);
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+body.dark-mode .settings-item-icon,
+body.dark-mode .language-check,
+body.dark-mode .nav-button .material-icons-round {
+  color: var(--dark-text-primary);
+}
+
+/* Make icons more visible */
+.app-icon-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background-color: rgba(66, 133, 244, 0.9);
+  transition: transform 0.2s ease;
+}
+
+.app-icon-img:active {
+  transform: scale(0.95);
+}
+
+.app-icon-img span.material-icons-round {
+  color: white;
+}
+
+body.dark-mode .app-icon-img {
+  background-color: rgba(187, 134, 252, 0.8);
+}
+
+/* Add shadow to make text more readable on wallpaper */
+.app-name {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* Notification panel improvements */
+body.dark-mode .notification-panel {
+  background-color: rgba(18, 18, 18, 0.95);
+}
+
+body.dark-mode .quick-toggle {
+  background-color: rgba(30, 30, 30, 0.8);
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode .quick-toggle.active {
+  background-color: var(--dark-primary);
+  color: #000;
+}
+
+body.dark-mode .notification {
+  background-color: var(--dark-surface);
+  border-left: 4px solid var(--dark-primary);
 }

@@ -34,14 +34,14 @@ export const SettingsManager = {
   // Default settings
   defaultSettings: {
     language: 'ru',
-    darkMode: false,
+    darkMode: true,
     toggleStates: {
       wifi: true,
       bluetooth: false,
       dnd: false,
       flashlight: false,
       auto: false,
-      dark: false,
+      dark: true,
       rotation: false,
       battery: false
     },

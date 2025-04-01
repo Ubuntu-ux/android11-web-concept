@@ -11,6 +11,9 @@ let widgetManager;
 let wallpaperManager;
 
 document.addEventListener("DOMContentLoaded", function() {
+  // Сразу устанавливаем тёмную тему по умолчанию
+  document.body.classList.add('dark-mode');
+  
   // Get DOM elements
   const statusBar = document.querySelector(".status-bar");
   const notificationPanel = document.querySelector(".notification-panel");
@@ -133,6 +136,8 @@ document.addEventListener("DOMContentLoaded", function() {
       // If this is the dark mode toggle, toggle dark mode
       if (this.querySelector(".label").textContent === getTranslatedLabel(this.querySelector(".label"), "Dark")) {
         document.body.classList.toggle("dark-mode");
+        // Активируем тёмный режим сразу
+        document.querySelector('.quick-toggle:nth-child(6)').classList.add('active');
       }
     });
   });
@@ -399,10 +404,16 @@ document.addEventListener("DOMContentLoaded", function() {
     wallpaperManager = new WallpaperManager();
     wallpaperManager.init();
     
-    // Настройка слушателя для темного режима
-    const darkModeToggle = document.querySelector('.quick-toggle:nth-child(2):nth-of-type(2)');
-    if (darkModeToggle) {
-      darkModeToggle.addEventListener('click', function() {
+    // Активируем тёмный режим по умолчанию
+    SettingsManager.setSetting('darkMode', true);
+    
+    // Находим переключатель темного режима
+    const darkToggle = document.querySelector('.quick-toggle:nth-child(6)');
+    if (darkToggle) {
+      darkToggle.classList.add('active');
+      
+      // Настройка слушателя для темного режима
+      darkToggle.addEventListener('click', function() {
         const isDarkMode = document.body.classList.contains('dark-mode');
         
         // Сохранить настройку темного режима
@@ -415,19 +426,9 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }
     
-    // Загрузить сохраненные настройки темного режима
-    const settings = SettingsManager.getSettings();
-    if (settings.darkMode) {
-      document.body.classList.add('dark-mode');
-      const darkModeToggle = document.querySelector('.quick-toggle:nth-child(6)');
-      if (darkModeToggle) {
-        darkModeToggle.classList.add('active');
-      }
-      
-      // Обновить обои при загрузке в темном режиме
-      if (wallpaperManager) {
-        wallpaperManager.updateForDarkMode(true);
-      }
+    // Обновить обои при загрузке в темном режиме
+    if (wallpaperManager) {
+      wallpaperManager.updateForDarkMode(true);
     }
   }
 
