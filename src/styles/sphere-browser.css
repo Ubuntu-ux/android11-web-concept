@@ -1,0 +1,586 @@
+/* Стили для браузера Sphere */
+
+.sphere-browser {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: var(--background-color);
+  color: var(--dark-text);
+  overflow: hidden;
+}
+
+/* Контейнер браузера */
+.sphere-browser-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+/* Шапка браузера */
+.sphere-browser-header {
+  background-color: var(--surface-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+/* Вкладки */
+.sphere-tabs-container {
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  padding: 0 4px;
+  height: 40px;
+  background-color: var(--surface-color);
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.sphere-tabs {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-width: min-content;
+}
+
+.sphere-tab {
+  display: flex;
+  align-items: center;
+  min-width: 120px;
+  max-width: 200px;
+  height: 32px;
+  margin: 4px 2px;
+  padding: 0 8px;
+  border-radius: 8px 8px 0 0;
+  background-color: rgba(0, 0, 0, 0.05);
+  position: relative;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.2s;
+}
+
+.sphere-tab:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.sphere-tab.active {
+  background-color: var(--primary-color-light);
+}
+
+.tab-favicon {
+  font-size: 16px;
+  margin-right: 6px;
+  color: var(--primary-color);
+}
+
+.tab-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.tab-close {
+  font-size: 16px;
+  margin-left: 4px;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+
+.tab-close:hover {
+  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+.sphere-new-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  margin: 4px 0;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sphere-new-tab:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.sphere-new-tab .material-icons-round {
+  font-size: 18px;
+  color: var(--dark-text);
+}
+
+/* Панель инструментов */
+.sphere-toolbar {
+  display: flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 8px;
+  background-color: var(--surface-color);
+}
+
+.sphere-toolbar button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sphere-toolbar button:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.sphere-toolbar button .material-icons-round {
+  font-size: 20px;
+  color: var(--dark-text);
+}
+
+/* Адресная строка */
+.sphere-address-bar {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  height: 36px;
+  margin: 0 8px;
+  padding: 0 12px;
+  border-radius: 18px;
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: background-color 0.2s;
+}
+
+.sphere-address-bar:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.sphere-address-bar .material-icons-round {
+  font-size: 16px;
+  margin-right: 8px;
+  color: var(--dark-text-secondary);
+}
+
+.sphere-address-input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  background: none;
+  font-size: 14px;
+  color: var(--dark-text);
+  padding: 0;
+}
+
+.sphere-address-input:focus {
+  outline: none;
+}
+
+.sphere-address-input::placeholder {
+  color: var(--dark-text-secondary);
+  opacity: 0.7;
+}
+
+/* Основное содержимое */
+.sphere-content {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #ffffff;
+}
+
+/* Стили для страницы новой вкладки */
+.sphere-new-tab-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px 20px;
+  height: 100%;
+}
+
+.sphere-search-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 560px;
+  height: 46px;
+  padding: 0 16px;
+  border-radius: 23px;
+  background-color: rgba(0, 0, 0, 0.05);
+  margin-bottom: 40px;
+  transition: box-shadow 0.2s;
+}
+
+.sphere-search-container:hover {
+  box-shadow: 0 1px 6px rgba(32, 33, 36, 0.28);
+}
+
+.sphere-search-container .material-icons-round {
+  font-size: 20px;
+  margin-right: 12px;
+  color: var(--dark-text-secondary);
+}
+
+.sphere-search-input {
+  flex: 1;
+  height: 100%;
+  border: none;
+  background: none;
+  font-size: 16px;
+  color: var(--dark-text);
+}
+
+.sphere-search-input:focus {
+  outline: none;
+}
+
+.sphere-top-sites {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  width: 100%;
+  max-width: 600px;
+  margin-top: 20px;
+}
+
+.sphere-top-site {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 16px;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.sphere-top-site:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.site-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--primary-color-light);
+  margin-bottom: 8px;
+}
+
+.site-icon .material-icons-round {
+  font-size: 24px;
+  color: var(--primary-color);
+}
+
+.site-title {
+  font-size: 13px;
+  color: var(--dark-text);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+/* Веб-страница */
+.sphere-web-content {
+  padding: 16px;
+}
+
+.sphere-web-page {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 1px 6px rgba(32, 33, 36, 0.1);
+}
+
+.sphere-demo-content {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: var(--primary-color-light);
+  border-radius: 8px;
+  color: var(--dark-text);
+}
+
+/* Закладки */
+.sphere-bookmarks-page {
+  padding: 20px;
+}
+
+.sphere-bookmarks-page h2 {
+  margin-bottom: 16px;
+  font-size: 20px;
+}
+
+.sphere-bookmarks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sphere-bookmark-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  background-color: var(--surface-color);
+  transition: background-color 0.2s;
+}
+
+.sphere-bookmark-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sphere-bookmark-item .material-icons-round {
+  font-size: 20px;
+  margin-right: 12px;
+  color: var(--primary-color);
+}
+
+.bookmark-details {
+  flex: 1;
+  overflow: hidden;
+}
+
+.bookmark-title {
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bookmark-url {
+  font-size: 12px;
+  color: var(--dark-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.bookmark-delete {
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  margin-left: 8px;
+}
+
+.bookmark-delete:hover {
+  opacity: 1;
+}
+
+/* История */
+.sphere-history-page {
+  padding: 20px;
+}
+
+.sphere-history-page h2 {
+  margin-bottom: 16px;
+  font-size: 20px;
+}
+
+.sphere-history-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+.sphere-clear-history {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.2s;
+}
+
+.sphere-clear-history:hover {
+  background-color: var(--primary-color-dark);
+}
+
+.sphere-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.history-date {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--dark-text);
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.sphere-history-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.sphere-history-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sphere-history-item .material-icons-round {
+  font-size: 20px;
+  margin-right: 12px;
+  color: var(--dark-text-secondary);
+}
+
+.history-details {
+  flex: 1;
+  overflow: hidden;
+}
+
+.history-title {
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.history-url {
+  font-size: 12px;
+  color: var(--dark-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.history-time {
+  font-size: 12px;
+  color: var(--dark-text-secondary);
+  margin-left: 8px;
+}
+
+.sphere-empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  color: var(--dark-text-secondary);
+  font-size: 16px;
+}
+
+/* Темная тема */
+body.dark-mode .sphere-browser {
+  background-color: var(--dark-background);
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode .sphere-browser-header {
+  background-color: var(--dark-surface);
+}
+
+body.dark-mode .sphere-tabs-container {
+  background-color: var(--dark-surface);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .sphere-tab {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .sphere-tab:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .sphere-tab.active {
+  background-color: rgba(var(--primary-color-rgb), 0.3);
+}
+
+body.dark-mode .sphere-toolbar {
+  background-color: var(--dark-surface);
+}
+
+body.dark-mode .sphere-toolbar button .material-icons-round {
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode .sphere-address-bar {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .sphere-address-bar:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+body.dark-mode .sphere-address-input {
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode .sphere-address-input::placeholder {
+  color: var(--dark-text-secondary);
+}
+
+body.dark-mode .sphere-content {
+  background-color: var(--dark-background);
+}
+
+body.dark-mode .sphere-web-page {
+  background-color: var(--dark-surface);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+}
+
+body.dark-mode .sphere-search-container {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .sphere-search-input {
+  color: var(--dark-text-primary);
+}
+
+body.dark-mode .sphere-top-site:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .sphere-bookmark-item,
+body.dark-mode .sphere-history-item {
+  background-color: var(--dark-surface);
+}
+
+body.dark-mode .sphere-bookmark-item:hover,
+body.dark-mode .sphere-history-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+  .sphere-top-sites {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .sphere-tab {
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sphere-top-sites {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .sphere-tab {
+    min-width: 80px;
+    max-width: 120px;
+  }
+  
+  .sphere-address-bar {
+    margin: 0 4px;
+  }
+} 

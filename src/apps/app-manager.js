@@ -5,6 +5,7 @@ import { WeatherApp } from './weather.js';
 import { SettingsApp } from './settings.js';
 import { ClockApp } from './clock.js';
 import { ContactsApp } from './contacts.js';
+import { SphereBrowser } from './sphere-browser.js';
 import { SettingsManager } from '../settings-manager.js';
 import { AnimationHelper } from '../animations.js';
 
@@ -35,6 +36,7 @@ export class AppManager {
     this.registerApp('settings', new SettingsApp());
     this.registerApp('clock', new ClockApp());
     this.registerApp('contacts', new ContactsApp());
+    this.registerApp('sphere', new SphereBrowser());
     
     // Добавляем обработчики событий для запуска приложений
     this.setupAppLaunchers();
@@ -97,6 +99,13 @@ export class AppManager {
     document.querySelectorAll('.app-icon[data-app="contacts"]').forEach(element => {
       if (element) {
         element.addEventListener('click', () => this.launchApp('contacts'));
+      }
+    });
+    
+    // Sphere Browser (вместо Chrome)
+    document.querySelectorAll('.app-icon[data-app="chrome"]').forEach(element => {
+      if (element) {
+        element.addEventListener('click', () => this.launchApp('sphere'));
       }
     });
     
@@ -199,6 +208,7 @@ export class AppManager {
       'weather': 'Погода',
       'clock': 'Часы',
       'contacts': 'Контакты',
+      'sphere': 'Sphere Browser',
       'settings': 'Настройки',
       'phone': 'Телефон',
       'messages': 'Сообщения',

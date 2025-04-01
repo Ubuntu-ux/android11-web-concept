@@ -74,13 +74,13 @@ document.addEventListener("DOMContentLoaded", function() {
   // Handle swipe gesture to show/hide notification panel
   function handleSwipeGesture() {
     const swipeDistance = touchEndY - touchStartY;
-    
+
     // Если свайп вниз в верхней части экрана
     if (swipeDistance > 70 && touchStartY < 100) {
       showNotificationPanel();
       return;
     }
-    
+
     // Если свайп вверх, когда панель уведомлений открыта
     if (swipeDistance < -50 && notificationPanel.classList.contains("visible")) {
       hideNotificationPanel();
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Обновляем список недавних приложений
     updateRecentsList();
     // Скрываем панель уведомлений, если она открыта
-    hideNotificationPanel();
+        hideNotificationPanel();
     // Скрываем все открытые приложения
     if (appManager && appManager.isAppRunning()) {
       appManager.closeCurrentApp();
@@ -128,7 +128,7 @@ document.addEventListener("DOMContentLoaded", function() {
   function toggleRecentsScreen() {
     if (recentsScreen.classList.contains("visible")) {
       hideRecentsScreen();
-    } else {
+      } else {
       showRecentsScreen();
     }
   }
@@ -235,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function() {
     toggle.addEventListener("click", function() {
       const toggleId = this.getAttribute('data-toggle');
       this.classList.toggle("active");
-      
+
       // Сохраняем состояние переключателя в настройках
       if (toggleId) {
         SettingsManager.setSetting(`toggleStates.${toggleId}`, this.classList.contains("active"));
@@ -278,7 +278,7 @@ document.addEventListener("DOMContentLoaded", function() {
         AnimationHelper.showToast("Список приложений");
         return;
       }
-      
+
       // Запускаем приложение через менеджер приложений
       if (appManager) {
         appManager.launchApp(appId);
@@ -369,7 +369,7 @@ document.addEventListener("DOMContentLoaded", function() {
       'camera': 'camera_alt',
       'phone': 'call',
       'messages': 'chat',
-      'chrome': 'public',
+      'sphere': 'public',
       'gmail': 'email',
       'maps': 'map',
       'youtube': 'smart_display',
@@ -378,7 +378,8 @@ document.addEventListener("DOMContentLoaded", function() {
       'clock': 'access_time',
       'gallery': 'photo',
       'playstore': 'shopping_bag',
-      'development': 'build'
+      'development': 'build',
+      'contacts': 'contacts'
     };
     
     return appIcons[appName] || 'android';

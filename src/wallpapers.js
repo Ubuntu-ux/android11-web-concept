@@ -1,5 +1,5 @@
 // Wallpaper Manager for Android 11 Web
-import { SettingsManager } from './utils.js';
+import { SettingsManager } from './settings-manager.js';
 
 export default class WallpaperManager {
   constructor() {
