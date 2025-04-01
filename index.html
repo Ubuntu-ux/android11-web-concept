@@ -14,17 +14,22 @@
   <link rel="stylesheet" href="src/styles/apps.css">
   <link rel="stylesheet" href="src/styles/widgets.css">
   <link rel="stylesheet" href="src/styles/wallpapers.css">
+  <link rel="stylesheet" href="src/styles/animations.css">
+  <link rel="stylesheet" href="src/styles/dev-app.css">
+  <link rel="stylesheet" href="src/styles/recents.css">
+  <link rel="stylesheet" href="src/styles/calculator.css">
+  <link rel="stylesheet" href="src/styles/notes.css">
+  <link rel="stylesheet" href="src/styles/weather.css">
+  <link rel="stylesheet" href="src/styles/clock.css">
+  <link rel="stylesheet" href="src/styles/contacts.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-  <link rel="stylesheet" href="src/styles/animations.css">
-  <link rel="stylesheet" href="src/styles/dev-app.css">
-  <link rel="stylesheet" href="src/styles/recents.css">
   <script type="module" src="src/main.js"></script>
   <script type="module" src="src/animations.js"></script>
 </head>
-<body>
+<body class="dark-mode">
   <div class="android-phone">
     <!-- Status Bar -->
     <div class="status-bar">
@@ -42,38 +47,38 @@
     <div class="notification-panel">
       <div class="quick-settings">
         <div class="quick-settings-row">
-          <div class="quick-toggle active">
+          <div class="quick-toggle active" data-toggle="wifi">
             <span class="material-icons-round">wifi</span>
             <span class="label" data-en="Wi-Fi" data-ru="Wi-Fi">Wi-Fi</span>
           </div>
-          <div class="quick-toggle">
+          <div class="quick-toggle" data-toggle="bluetooth">
             <span class="material-icons-round">bluetooth</span>
             <span class="label" data-en="Bluetooth" data-ru="Bluetooth">Bluetooth</span>
           </div>
-          <div class="quick-toggle">
+          <div class="quick-toggle" data-toggle="dnd">
             <span class="material-icons-round">do_not_disturb_on</span>
             <span class="label" data-en="DND" data-ru="Не беспокоить">Не беспокоить</span>
           </div>
-          <div class="quick-toggle">
+          <div class="quick-toggle" data-toggle="flashlight">
             <span class="material-icons-round">flashlight_on</span>
             <span class="label" data-en="Flashlight" data-ru="Фонарик">Фонарик</span>
           </div>
         </div>
 
         <div class="quick-settings-row">
-          <div class="quick-toggle">
+          <div class="quick-toggle" data-toggle="auto">
             <span class="material-icons-round">auto_awesome</span>
             <span class="label" data-en="Auto" data-ru="Авто">Авто</span>
           </div>
-          <div class="quick-toggle">
+          <div class="quick-toggle active" data-toggle="dark">
             <span class="material-icons-round">dark_mode</span>
             <span class="label" data-en="Dark" data-ru="Тёмная">Тёмная</span>
           </div>
-          <div class="quick-toggle">
+          <div class="quick-toggle" data-toggle="rotation">
             <span class="material-icons-round">screen_rotation</span>
             <span class="label" data-en="Rotation" data-ru="Поворот">Поворот</span>
           </div>
-          <div class="quick-toggle">
+          <div class="quick-toggle" data-toggle="battery">
             <span class="material-icons-round">battery_saver</span>
             <span class="label" data-en="Battery" data-ru="Батарея">Батарея</span>
           </div>
@@ -130,128 +135,140 @@
       <!-- App Grid -->
       <div class="app-grid">
         <!-- Row 1 -->
-        <div class="app-icon">
-          <div class="app-icon-img" id="phone">
+        <div class="app-icon" data-app="phone">
+          <div class="app-icon-img">
             <span class="material-icons-round">call</span>
           </div>
           <div class="app-name" data-en="Phone" data-ru="Телефон">Телефон</div>
         </div>
-        <div class="app-icon">
-          <div class="app-icon-img" id="messages">
+        <div class="app-icon" data-app="contacts">
+          <div class="app-icon-img">
+            <span class="material-icons-round">contacts</span>
+          </div>
+          <div class="app-name" data-en="Contacts" data-ru="Контакты">Контакты</div>
+        </div>
+        <div class="app-icon" data-app="messages">
+          <div class="app-icon-img">
             <span class="material-icons-round">chat</span>
           </div>
           <div class="app-name" data-en="Messages" data-ru="Сообщения">Сообщения</div>
         </div>
-        <div class="app-icon">
-          <div class="app-icon-img" id="chrome">
+        <div class="app-icon" data-app="chrome">
+          <div class="app-icon-img">
             <span class="material-icons-round">public</span>
           </div>
           <div class="app-name" data-en="Chrome" data-ru="Chrome">Chrome</div>
         </div>
-        <div class="app-icon">
-          <div class="app-icon-img" id="camera">
+        <div class="app-icon" data-app="camera">
+          <div class="app-icon-img">
             <span class="material-icons-round">camera_alt</span>
           </div>
           <div class="app-name" data-en="Camera" data-ru="Камера">Камера</div>
         </div>
 
         <!-- Row 2 -->
-        <div class="app-icon">
-          <div class="app-icon-img" id="gallery">
+        <div class="app-icon" data-app="gallery">
+          <div class="app-icon-img">
             <span class="material-icons-round">photo</span>
           </div>
           <div class="app-name" data-en="Gallery" data-ru="Галерея">Галерея</div>
         </div>
-        <div class="app-icon" id="settings-app">
-          <div class="app-icon-img" id="settings">
+        <div class="app-icon" data-app="settings">
+          <div class="app-icon-img">
             <span class="material-icons-round">settings</span>
           </div>
           <div class="app-name" data-en="Settings" data-ru="Настройки">Настройки</div>
         </div>
-        <div class="app-icon">
-          <div class="app-icon-img" id="playstore">
+        <div class="app-icon" data-app="playstore">
+          <div class="app-icon-img">
             <span class="material-icons-round">shopping_bag</span>
           </div>
           <div class="app-name" data-en="Play Store" data-ru="Play Маркет">Play Маркет</div>
         </div>
-        <div class="app-icon">
-          <div class="app-icon-img" id="maps">
+        <div class="app-icon" data-app="maps">
+          <div class="app-icon-img">
             <span class="material-icons-round">map</span>
           </div>
           <div class="app-name" data-en="Maps" data-ru="Карты">Карты</div>
         </div>
 
         <!-- Row 3 -->
-        <div class="app-icon">
-          <div class="app-icon-img" id="gmail">
+        <div class="app-icon" data-app="gmail">
+          <div class="app-icon-img">
             <span class="material-icons-round">email</span>
           </div>
           <div class="app-name" data-en="Gmail" data-ru="Gmail">Gmail</div>
         </div>
-        <div class="app-icon">
-          <div class="app-icon-img" id="youtube">
+        <div class="app-icon" data-app="youtube">
+          <div class="app-icon-img">
             <span class="material-icons-round">smart_display</span>
           </div>
           <div class="app-name" data-en="YouTube" data-ru="YouTube">YouTube</div>
         </div>
-        <div class="app-icon">
-          <div class="app-icon-img" id="calendar">
+        <div class="app-icon" data-app="calendar">
+          <div class="app-icon-img">
             <span class="material-icons-round">calendar_today</span>
           </div>
           <div class="app-name" data-en="Calendar" data-ru="Календарь">Календарь</div>
         </div>
-        <div class="app-icon">
-          <div class="app-icon-img" id="photos">
+        <div class="app-icon" data-app="photos">
+          <div class="app-icon-img">
             <span class="material-icons-round">photo_library</span>
           </div>
           <div class="app-name" data-en="Photos" data-ru="Фото">Фото</div>
         </div>
 
         <!-- Row 4 - Наши приложения -->
-        <div class="app-icon">
-          <div class="app-icon-img" id="calculator">
+        <div class="app-icon" data-app="calculator">
+          <div class="app-icon-img">
             <span class="material-icons-round">calculate</span>
           </div>
           <div class="app-name" data-en="Calculator" data-ru="Калькулятор">Калькулятор</div>
         </div>
-        <div class="app-icon">
-          <div class="app-icon-img" id="notes">
+        <div class="app-icon" data-app="notes">
+          <div class="app-icon-img">
             <span class="material-icons-round">note</span>
           </div>
           <div class="app-name" data-en="Notes" data-ru="Заметки">Заметки</div>
         </div>
-        <div class="app-icon">
-          <div class="app-icon-img" id="weather">
+        <div class="app-icon" data-app="weather">
+          <div class="app-icon-img">
             <span class="material-icons-round">cloud</span>
           </div>
           <div class="app-name" data-en="Weather" data-ru="Погода">Погода</div>
+        </div>
+        <div class="app-icon" data-app="clock">
+          <div class="app-icon-img">
+            <span class="material-icons-round">access_time</span>
+          </div>
+          <div class="app-name" data-en="Clock" data-ru="Часы">Часы</div>
         </div>
       </div>
 
       <!-- Dock -->
       <div class="dock">
-        <div class="app-icon">
-          <div class="app-icon-img" id="phone-dock">
+        <div class="app-icon" data-app="phone">
+          <div class="app-icon-img">
             <span class="material-icons-round">call</span>
           </div>
         </div>
-        <div class="app-icon">
-          <div class="app-icon-img" id="calculator-dock">
+        <div class="app-icon" data-app="calculator">
+          <div class="app-icon-img">
             <span class="material-icons-round">calculate</span>
           </div>
         </div>
-        <div class="app-icon">
-          <div class="app-icon-img" id="notes-dock">
+        <div class="app-icon" data-app="notes">
+          <div class="app-icon-img">
             <span class="material-icons-round">note</span>
           </div>
         </div>
-        <div class="app-icon">
-          <div class="app-icon-img" id="weather-dock">
-            <span class="material-icons-round">cloud</span>
+        <div class="app-icon" data-app="settings">
+          <div class="app-icon-img">
+            <span class="material-icons-round">settings</span>
           </div>
         </div>
-        <div class="app-icon">
-          <div class="app-icon-img" id="app-drawer">
+        <div class="app-icon" data-app="app-drawer">
+          <div class="app-icon-img">
             <span class="material-icons-round">apps</span>
           </div>
         </div>
@@ -271,116 +288,22 @@
       </div>
     </div>
 
-    <!-- Settings Screen -->
-    <div class="settings-screen">
-      <div class="settings-header">
-        <span class="material-icons-round" id="settings-back">arrow_back</span>
-        <span class="settings-title" data-en="Settings" data-ru="Настройки">Настройки</span>
+    <!-- Recents Screen -->
+    <div class="recents-screen">
+      <div class="recents-header">
+        <span class="recents-title" data-en="Recent apps" data-ru="Недавние приложения">Недавние приложения</span>
+        <button class="recents-clear-all-button" data-en="Clear all" data-ru="Очистить всё">Очистить всё</button>
       </div>
-
-      <div class="settings-content">
-        <div class="settings-section">
-          <div class="settings-section-title" data-en="NETWORK & INTERNET" data-ru="СЕТЬ И ИНТЕРНЕТ">СЕТЬ И ИНТЕРНЕТ</div>
-
-          <div class="settings-item">
-            <span class="material-icons-round settings-item-icon">wifi</span>
-            <div class="settings-item-content">
-              <div class="settings-item-title" data-en="Wi-Fi" data-ru="Wi-Fi">Wi-Fi</div>
-              <div class="settings-item-subtitle" data-en="Connected" data-ru="Подключено">Подключено</div>
-            </div>
-            <span class="material-icons-round">keyboard_arrow_right</span>
-          </div>
-
-          <div class="settings-item">
-            <span class="material-icons-round settings-item-icon">bluetooth</span>
-            <div class="settings-item-content">
-              <div class="settings-item-title" data-en="Bluetooth" data-ru="Bluetooth">Bluetooth</div>
-              <div class="settings-item-subtitle" data-en="Off" data-ru="Выключено">Выключено</div>
-            </div>
-            <span class="material-icons-round">keyboard_arrow_right</span>
-          </div>
-        </div>
-
-        <div class="settings-section">
-          <div class="settings-section-title" data-en="SYSTEM" data-ru="СИСТЕМА">СИСТЕМА</div>
-
-          <div class="settings-item" id="language-settings">
-            <span class="material-icons-round settings-item-icon">language</span>
-            <div class="settings-item-content">
-              <div class="settings-item-title" data-en="Languages & input" data-ru="Язык и ввод">Язык и ввод</div>
-              <div class="settings-item-subtitle" data-en="Russian" data-ru="Русский">Русский</div>
-            </div>
-            <span class="material-icons-round">keyboard_arrow_right</span>
-          </div>
-
-          <div class="settings-item" id="about-phone">
-            <span class="material-icons-round settings-item-icon">info</span>
-            <div class="settings-item-content">
-              <div class="settings-item-title" data-en="About phone" data-ru="О телефоне">О телефоне</div>
-              <div class="settings-item-subtitle" data-en="Android 11 Web" data-ru="Android 11 Web">Android 11 Web</div>
-            </div>
-            <span class="material-icons-round">keyboard_arrow_right</span>
-          </div>
-        </div>
+      
+      <div class="recents-list">
+        <!-- Здесь будут динамически добавляться карточки недавних приложений -->
       </div>
-    </div>
-
-    <!-- About Phone Screen -->
-    <div class="about-phone-screen">
-      <div class="settings-header">
-        <span class="material-icons-round" id="about-back">arrow_back</span>
-        <span class="settings-title" data-en="About phone" data-ru="О телефоне">О телефоне</span>
-      </div>
-
-      <div class="about-phone-logo">
-        <span class="material-icons-round">android</span>
-      </div>
-
-      <div class="about-phone-info">
-        <div class="about-info-item">
-          <div class="about-info-label" data-en="Device name" data-ru="Имя устройства">Имя устройства</div>
-          <div class="about-info-value">Web Phone</div>
+      
+      <div class="recents-empty" style="display: none;">
+        <div class="recents-empty-icon">
+          <span class="material-icons-round">view_carousel</span>
         </div>
-
-        <div class="about-info-item">
-          <div class="about-info-label" data-en="Android version" data-ru="Версия Android">Версия Android</div>
-          <div class="about-info-value">11</div>
-        </div>
-
-        <div class="about-info-item">
-          <div class="about-info-label" data-en="Build number" data-ru="Номер сборки">Номер сборки</div>
-          <div class="about-info-value">Web.2025.04.01</div>
-        </div>
-
-        <div class="about-info-item">
-          <div class="about-info-label" data-en="Model" data-ru="Модель">Модель</div>
-          <div class="about-info-value">Chrome Browser Device</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Language Screen -->
-    <div class="language-screen">
-      <div class="settings-header">
-        <span class="material-icons-round" id="language-back">arrow_back</span>
-        <span class="settings-title" data-en="Language" data-ru="Язык">Язык</span>
-      </div>
-
-      <div class="language-list">
-        <div class="language-item" id="lang-ru">
-          <div class="language-item-content">
-            <div class="language-name">Русский</div>
-            <div class="language-native">Россия</div>
-          </div>
-          <span class="material-icons-round language-check">check</span>
-        </div>
-
-        <div class="language-item" id="lang-en">
-          <div class="language-item-content">
-            <div class="language-name">English</div>
-            <div class="language-native">United States</div>
-          </div>
-        </div>
+        <div class="recents-empty-message" data-en="No recent apps" data-ru="Нет недавних приложений">Нет недавних приложений</div>
       </div>
     </div>
   </div>
@@ -388,10 +311,31 @@
   <!-- App Screen (для отображения приложений) -->
   <div class="app-screen"></div>
 
+  <!-- Toast Container -->
+  <div id="toast-container"></div>
+  
   <!-- Ripple Effect Container -->
   <div id="ripple-container"></div>
   
   <!-- Swipe Indicator -->
   <div class="swipe-indicator"></div>
+  
+  <!-- Template для карточки недавнего приложения -->
+  <template id="recent-app-template">
+    <div class="recent-app-card">
+      <div class="recent-app-content">
+        <div class="recent-app-header">
+          <div class="recent-app-icon">
+            <span class="material-icons-round"></span>
+          </div>
+          <div class="recent-app-title"></div>
+          <button class="recent-app-close">
+            <span class="material-icons-round">close</span>
+          </button>
+        </div>
+        <div class="recent-app-screenshot"></div>
+      </div>
+    </div>
+  </template>
 </body>
 </html>

@@ -8,29 +8,47 @@ export class RippleEffect {
 
   // Attach ripple effect to interactive elements
   attachRippleEffect() {
+    // Для элементов, которые уже существуют при загрузке страницы
     const interactiveElements = document.querySelectorAll('.nav-button, .app-icon, .quick-toggle, .settings-item, .btn, .language-item, .dev-app-button');
     
     interactiveElements.forEach(element => {
-      element.addEventListener('mousedown', this.createRipple);
-      element.addEventListener('touchstart', this.createRipple, { passive: true });
+      // Удаляем старые обработчики, чтобы избежать дублирования
+      element.removeEventListener('mousedown', this.createRipple);
+      element.removeEventListener('touchstart', this.createRipple);
+      
+      // Добавляем новые обработчики
+      element.addEventListener('mousedown', this.createRipple, { once: true });
+      element.addEventListener('touchstart', this.createRipple, { passive: true, once: true });
     });
     
-    // For dynamically added elements, use event delegation
-    document.addEventListener('mousedown', (e) => {
+    // Удаляем старые глобальные обработчики
+    document.removeEventListener('mousedown', this._delegatedMousedownHandler);
+    document.removeEventListener('touchstart', this._delegatedTouchstartHandler);
+    
+    // Создаем новые функции-обработчики с привязкой к this
+    this._delegatedMousedownHandler = (e) => {
       if (e.target && e.target.closest('.nav-button, .app-icon, .quick-toggle, .settings-item, .btn, .language-item, .dev-app-button, .app-card, .recents-close, .recents-clear, .app-card-close')) {
         this.createRipple(e);
       }
-    });
+    };
     
-    document.addEventListener('touchstart', (e) => {
+    this._delegatedTouchstartHandler = (e) => {
       if (e.target && e.target.closest('.nav-button, .app-icon, .quick-toggle, .settings-item, .btn, .language-item, .dev-app-button, .app-card, .recents-close, .recents-clear, .app-card-close')) {
         this.createRipple(e);
       }
-    }, { passive: true });
+    };
+    
+    // Добавляем новые глобальные обработчики
+    document.addEventListener('mousedown', this._delegatedMousedownHandler);
+    document.addEventListener('touchstart', this._delegatedTouchstartHandler, { passive: true });
   }
 
   // Create ripple effect
   createRipple(event) {
+    // Предотвращаем обработку события дважды
+    if (event.rippleProcessed) return;
+    event.rippleProcessed = true;
+    
     // Find the target element (the closest interactive element)
     const targetElement = event.target.closest('.nav-button, .app-icon, .quick-toggle, .settings-item, .btn, .language-item, .dev-app-button, .app-card, .recents-close, .recents-clear, .app-card-close');
     if (!targetElement) return;
@@ -107,17 +125,22 @@ export class AnimationHelper {
     
     let touchStartY = 0;
     
-    // Show swipe indicator on swipe down from status bar
-    document.addEventListener('touchstart', (e) => {
+    // Remove existing event listeners to avoid duplicates
+    document.removeEventListener('touchstart', this._touchStartHandler);
+    document.removeEventListener('touchmove', this._touchMoveHandler);
+    document.removeEventListener('touchend', this._touchEndHandler);
+    
+    // Create bound event handlers
+    this._touchStartHandler = (e) => {
       touchStartY = e.touches[0].clientY;
       
       // Only for touches near the top of the screen
       if (touchStartY < 50) {
         document.body.classList.add('swipe-active');
       }
-    });
+    };
     
-    document.addEventListener('touchmove', (e) => {
+    this._touchMoveHandler = (e) => {
       if (touchStartY < 50) {
         const touchMoveY = e.touches[0].clientY;
         const distance = touchMoveY - touchStartY;
@@ -129,12 +152,17 @@ export class AnimationHelper {
           swipeIndicator.style.opacity = 0;
         }
       }
-    });
+    };
     
-    document.addEventListener('touchend', () => {
+    this._touchEndHandler = () => {
       document.body.classList.remove('swipe-active');
       swipeIndicator.style.opacity = 0;
-    });
+    };
+    
+    // Add event listeners
+    document.addEventListener('touchstart', this._touchStartHandler, { passive: true });
+    document.addEventListener('touchmove', this._touchMoveHandler, { passive: true });
+    document.addEventListener('touchend', this._touchEndHandler, { passive: true });
   }
 
   // Setup page transitions
@@ -168,16 +196,51 @@ export class AnimationHelper {
       }
     }, duration);
   }
+  
+  // Safe click handler to prevent double/ghost clicks
+  static safeClickHandler(element, handler, delay = 300) {
+    let lastClickTime = 0;
+    
+    // Remove existing click handlers to avoid duplicates
+    const oldClickHandler = element._safeClickHandler;
+    if (oldClickHandler) {
+      element.removeEventListener('click', oldClickHandler);
+    }
+    
+    // Create a new handler with debounce
+    const newHandler = (event) => {
+      const now = new Date().getTime();
+      if (now - lastClickTime > delay) {
+        lastClickTime = now;
+        handler(event);
+      }
+    };
+    
+    // Store reference to the handler for later removal
+    element._safeClickHandler = newHandler;
+    
+    // Add new click handler
+    element.addEventListener('click', newHandler);
+    
+    return newHandler;
+  }
 }
 
-// Initialize when document is loaded
-document.addEventListener('DOMContentLoaded', () => {
-  // Initialize ripple effect
-  const rippleEffect = new RippleEffect();
+// Initialize when document is loaded - but make sure it only runs once
+if (!window._animationsInitialized) {
+  window._animationsInitialized = true;
   
-  // Initialize animation helper
-  const animationHelper = new AnimationHelper();
-  
-  // Make animation helper globally available
-  window.AnimationHelper = AnimationHelper;
-}); 
+  document.addEventListener('DOMContentLoaded', () => {
+    // Initialize ripple effect
+    const rippleEffect = new RippleEffect();
+    
+    // Initialize animation helper
+    const animationHelper = new AnimationHelper();
+    
+    // Make animation helper globally available
+    window.AnimationHelper = AnimationHelper;
+    window.RippleEffect = RippleEffect;
+    
+    console.log('Animation effects initialized');
+  });
+} 

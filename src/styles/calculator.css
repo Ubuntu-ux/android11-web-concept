@@ -1,0 +1,294 @@
+/* Стили для приложения калькулятора */
+
+.calculator-app {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--calculator-bg);
+  color: var(--calculator-text);
+  overflow: hidden;
+}
+
+/* Заголовок калькулятора */
+.calculator-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--calculator-divider);
+  background-color: var(--calculator-header-bg);
+}
+
+.calculator-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.calculator-mode-toggle {
+  background-color: var(--calculator-button-function-bg);
+  color: var(--calculator-button-function-text);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Дисплей калькулятора */
+.calculator-display {
+  background-color: var(--calculator-display-bg);
+  padding: 16px;
+  text-align: right;
+  border-bottom: 1px solid var(--calculator-divider);
+  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.calculator-expression {
+  font-size: 36px;
+  line-height: 1.2;
+  color: var(--calculator-display-text);
+  margin-bottom: 8px;
+  word-break: break-all;
+}
+
+.calculator-result {
+  font-size: 20px;
+  color: var(--calculator-display-secondary);
+}
+
+/* Кнопки калькулятора */
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background-color: var(--calculator-button-divider);
+  flex: 1;
+}
+
+.calculator-button {
+  background-color: var(--calculator-button-bg);
+  color: var(--calculator-button-text);
+  border: none;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  padding: 0;
+  min-height: 60px;
+}
+
+.calculator-button:active {
+  background-color: var(--calculator-button-active);
+}
+
+.calculator-button-digit {
+  background-color: var(--calculator-button-digit-bg);
+  color: var(--calculator-button-digit-text);
+}
+
+.calculator-button-operator {
+  background-color: var(--calculator-button-operator-bg);
+  color: var(--calculator-button-operator-text);
+  font-weight: bold;
+}
+
+.calculator-button-action {
+  background-color: var(--calculator-button-action-bg);
+  color: var(--calculator-button-action-text);
+}
+
+.calculator-button-equals {
+  background-color: var(--calculator-button-equals-bg);
+  color: var(--calculator-button-equals-text);
+}
+
+.calculator-button-function, 
+.calculator-button-constant {
+  background-color: var(--calculator-button-function-bg);
+  color: var(--calculator-button-function-text);
+  font-size: 18px;
+}
+
+/* Инженерные кнопки */
+.calculator-scientific-buttons {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background-color: var(--calculator-button-divider);
+}
+
+/* История калькулятора */
+.calculator-history {
+  background-color: var(--calculator-history-bg);
+  border-top: 1px solid var(--calculator-divider);
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 8px 16px;
+}
+
+.calculator-history.hidden {
+  display: none;
+}
+
+.calculator-history h3 {
+  margin: 8px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--calculator-history-title);
+}
+
+.calculator-history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.calculator-history-item {
+  font-size: 14px;
+  color: var(--calculator-history-text);
+  padding: 8px;
+  background-color: var(--calculator-history-item-bg);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.calculator-history-item:hover {
+  background-color: var(--calculator-history-item-hover);
+}
+
+.calculator-history-clear {
+  background-color: var(--calculator-history-clear-bg);
+  color: var(--calculator-history-clear-text);
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-top: 12px;
+  cursor: pointer;
+  font-size: 14px;
+  width: 100%;
+}
+
+/* Темная тема */
+body.dark-mode .calculator-app {
+  --calculator-bg: #121212;
+  --calculator-text: #FFFFFF;
+  --calculator-header-bg: #1E1E1E;
+  --calculator-divider: #2A2A2A;
+  
+  --calculator-display-bg: #1E1E1E;
+  --calculator-display-text: #FFFFFF;
+  --calculator-display-secondary: #A0A0A0;
+  
+  --calculator-button-divider: #121212;
+  --calculator-button-bg: #282828;
+  --calculator-button-text: #FFFFFF;
+  --calculator-button-active: #3D3D3D;
+  
+  --calculator-button-digit-bg: #323232;
+  --calculator-button-digit-text: #FFFFFF;
+  
+  --calculator-button-operator-bg: #5E35B1;
+  --calculator-button-operator-text: #FFFFFF;
+  
+  --calculator-button-action-bg: #424242;
+  --calculator-button-action-text: #FFFFFF;
+  
+  --calculator-button-equals-bg: #7B1FA2;
+  --calculator-button-equals-text: #FFFFFF;
+  
+  --calculator-button-function-bg: #4527A0;
+  --calculator-button-function-text: #FFFFFF;
+  
+  --calculator-history-bg: #1A1A1A;
+  --calculator-history-title: #BB86FC;
+  --calculator-history-text: #EEEEEE;
+  --calculator-history-item-bg: #282828;
+  --calculator-history-item-hover: #3D3D3D;
+  --calculator-history-clear-bg: #4527A0;
+  --calculator-history-clear-text: #FFFFFF;
+}
+
+/* Светлая тема */
+body:not(.dark-mode) .calculator-app {
+  --calculator-bg: #F5F5F5;
+  --calculator-text: #202124;
+  --calculator-header-bg: #FFFFFF;
+  --calculator-divider: #E0E0E0;
+  
+  --calculator-display-bg: #FFFFFF;
+  --calculator-display-text: #202124;
+  --calculator-display-secondary: #5F6368;
+  
+  --calculator-button-divider: #F5F5F5;
+  --calculator-button-bg: #FFFFFF;
+  --calculator-button-text: #202124;
+  --calculator-button-active: #E8E8E8;
+  
+  --calculator-button-digit-bg: #F8F9FA;
+  --calculator-button-digit-text: #202124;
+  
+  --calculator-button-operator-bg: #D1C4E9;
+  --calculator-button-operator-text: #4A148C;
+  
+  --calculator-button-action-bg: #E0E0E0;
+  --calculator-button-action-text: #202124;
+  
+  --calculator-button-equals-bg: #CE93D8;
+  --calculator-button-equals-text: #6A1B9A;
+  
+  --calculator-button-function-bg: #B39DDB;
+  --calculator-button-function-text: #4A148C;
+  
+  --calculator-history-bg: #FAFAFA;
+  --calculator-history-title: #4A148C;
+  --calculator-history-text: #202124;
+  --calculator-history-item-bg: #F1F3F4;
+  --calculator-history-item-hover: #E8EAED;
+  --calculator-history-clear-bg: #B39DDB;
+  --calculator-history-clear-text: #4A148C;
+}
+
+/* Адаптивность для малых экранов */
+@media (max-width: 360px) {
+  .calculator-expression {
+    font-size: 28px;
+  }
+  
+  .calculator-result {
+    font-size: 16px;
+  }
+  
+  .calculator-button {
+    font-size: 20px;
+    min-height: 50px;
+  }
+  
+  .calculator-button-function, 
+  .calculator-button-constant {
+    font-size: 16px;
+  }
+  
+  .calculator-scientific-buttons {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Анимации */
+.calculator-button {
+  transition: transform 0.1s ease, background-color 0.15s ease;
+}
+
+.calculator-button:active {
+  transform: scale(0.95);
+}
+
+.calculator-history-item {
+  transition: background-color 0.15s ease;
+} 

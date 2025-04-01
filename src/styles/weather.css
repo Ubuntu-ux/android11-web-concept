@@ -1,0 +1,214 @@
+.weather-app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+
+.weather-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: var(--surface);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.weather-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.weather-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.weather-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--surface-variant);
+  color: var(--text-primary);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.weather-actions button:hover {
+  background-color: var(--surface-variant-hover);
+}
+
+.weather-current {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.weather-location {
+  font-size: 20px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.weather-icon {
+  margin: 16px 0;
+}
+
+.weather-icon .material-icons-round {
+  font-size: 72px;
+  color: var(--primary);
+}
+
+.weather-temperature {
+  font-size: 48px;
+  font-weight: 300;
+  margin-bottom: 8px;
+}
+
+.weather-condition {
+  font-size: 18px;
+  color: var(--text-secondary);
+}
+
+.weather-forecast {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  margin: 0 16px;
+  background-color: var(--surface);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.forecast-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px;
+}
+
+.forecast-day-name {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.forecast-icon .material-icons-round {
+  font-size: 24px;
+  margin-bottom: 8px;
+  color: var(--primary);
+}
+
+.forecast-temp {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.weather-details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  padding: 16px;
+  margin: 16px;
+}
+
+.weather-detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  background-color: var(--surface);
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.weather-detail-item .material-icons-round {
+  font-size: 28px;
+  margin-bottom: 8px;
+  color: var(--primary);
+}
+
+.detail-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.detail-value {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+/* Темная тема */
+body.dark-theme .weather-app {
+  background-color: var(--dark-background);
+  color: var(--dark-text-primary);
+}
+
+body.dark-theme .weather-header {
+  background-color: var(--dark-surface);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .weather-actions button {
+  background-color: var(--dark-surface-variant);
+  color: var(--dark-text-primary);
+}
+
+body.dark-theme .weather-actions button:hover {
+  background-color: var(--dark-surface-variant-hover);
+}
+
+body.dark-theme .weather-condition {
+  color: var(--dark-text-secondary);
+}
+
+body.dark-theme .weather-forecast,
+body.dark-theme .weather-detail-item {
+  background-color: var(--dark-surface);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+body.dark-theme .detail-label {
+  color: var(--dark-text-secondary);
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.weather-current {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.weather-forecast {
+  animation: fadeIn 0.3s ease 0.1s forwards;
+  opacity: 0;
+}
+
+.weather-details {
+  animation: fadeIn 0.3s ease 0.2s forwards;
+  opacity: 0;
+}
+
+.forecast-day:nth-child(1) { animation-delay: 0.1s; }
+.forecast-day:nth-child(2) { animation-delay: 0.15s; }
+.forecast-day:nth-child(3) { animation-delay: 0.2s; }
+.forecast-day:nth-child(4) { animation-delay: 0.25s; }
+.forecast-day:nth-child(5) { animation-delay: 0.3s; }
+
+.weather-detail-item:nth-child(1) { animation-delay: 0.3s; }
+.weather-detail-item:nth-child(2) { animation-delay: 0.35s; }
+.weather-detail-item:nth-child(3) { animation-delay: 0.4s; }
+.weather-detail-item:nth-child(4) { animation-delay: 0.45s; } 

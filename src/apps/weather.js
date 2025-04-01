@@ -1,198 +1,107 @@
-// Weather App for Android 11 Web
-import { AppStorage } from '../utils.js';
+// Приложение погоды для Android 11 Web
+import { SettingsManager } from '../settings-manager.js';
+import { DOMUtils } from '../utils.js';
+import { AnimationHelper } from '../animations.js';
 
-export default class Weather {
+export class WeatherApp {
   constructor() {
     this.container = null;
-    this.weatherData = null;
-    this.isLoading = false;
-    this.error = null;
-    this.apiKey = '4d8fb5b93d4af21d66a2948710284366'; // OpenWeatherMap free API key
-    this.city = 'Москва';
+    this.weatherData = {
+      location: 'Москва',
+      temperature: 12,
+      condition: 'Облачно',
+      icon: 'cloud',
+      forecast: [
+        { day: 'Пн', temp: 13, icon: 'cloud' },
+        { day: 'Вт', temp: 15, icon: 'wb_sunny' },
+        { day: 'Ср', temp: 12, icon: 'water_drop' },
+        { day: 'Чт', temp: 10, icon: 'water_drop' },
+        { day: 'Пт', temp: 11, icon: 'cloud' }
+      ]
+    };
   }
 
-  // Initialize the weather app
+  // Инициализация приложения
   init(container) {
     this.container = container;
-    this.loadSavedCity();
+    this.container.classList.add('weather-app');
     this.render();
-    this.fetchWeather();
-    this.attachEventListeners();
+    
+    // Показываем сообщение о том, что это приложение находится в разработке
+    setTimeout(() => {
+      AnimationHelper.showToast('Приложение Погода в разработке');
+    }, 500);
   }
-
-  // Load saved city from storage
-  loadSavedCity() {
-    const savedData = AppStorage.getAppData('weather');
-    if (savedData && savedData.city) {
-      this.city = savedData.city;
-    }
-  }
-
-  // Save city to storage
-  saveCity(city) {
-    AppStorage.saveAppData('weather', { city: city });
-  }
-
-  // Render the weather UI
+  
+  // Отображение интерфейса
   render() {
     this.container.innerHTML = `
-      <div class="weather-app">
-        <div class="weather-header">
-          <span class="material-icons-round app-back">arrow_back</span>
-          <span class="app-title">Погода</span>
-          <span class="material-icons-round refresh-weather">refresh</span>
+      <div class="weather-header">
+        <h2>Погода</h2>
+        <div class="weather-actions">
+          <button class="weather-refresh-button">
+            <span class="material-icons-round">refresh</span>
+          </button>
+          <button class="weather-settings-button">
+            <span class="material-icons-round">settings</span>
+          </button>
         </div>
-        
-        <div class="city-search">
-          <input type="text" class="city-input" placeholder="Введите город" value="${this.city}">
-          <button class="search-button">Поиск</button>
+      </div>
+      
+      <div class="weather-current">
+        <div class="weather-location">${this.weatherData.location}</div>
+        <div class="weather-icon">
+          <span class="material-icons-round">${this.weatherData.icon}</span>
         </div>
-        
-        <div class="weather-content">
-          ${this.renderWeatherContent()}
+        <div class="weather-temperature">${this.weatherData.temperature}°C</div>
+        <div class="weather-condition">${this.weatherData.condition}</div>
+      </div>
+      
+      <div class="weather-forecast">
+        ${this.weatherData.forecast.map(day => `
+          <div class="forecast-day">
+            <div class="forecast-day-name">${day.day}</div>
+            <div class="forecast-icon">
+              <span class="material-icons-round">${day.icon}</span>
+            </div>
+            <div class="forecast-temp">${day.temp}°</div>
+          </div>
+        `).join('')}
+      </div>
+      
+      <div class="weather-details">
+        <div class="weather-detail-item">
+          <span class="material-icons-round">water_drop</span>
+          <span class="detail-label">Влажность</span>
+          <span class="detail-value">65%</span>
+        </div>
+        <div class="weather-detail-item">
+          <span class="material-icons-round">air</span>
+          <span class="detail-label">Ветер</span>
+          <span class="detail-value">5 м/с</span>
+        </div>
+        <div class="weather-detail-item">
+          <span class="material-icons-round">visibility</span>
+          <span class="detail-label">Видимость</span>
+          <span class="detail-value">10 км</span>
+        </div>
+        <div class="weather-detail-item">
+          <span class="material-icons-round">wb_twilight</span>
+          <span class="detail-label">Закат</span>
+          <span class="detail-value">18:42</span>
         </div>
       </div>
     `;
-  }
-
-  // Render the weather content based on current state
-  renderWeatherContent() {
-    if (this.isLoading) {
-      return `<div class="weather-loading">
-        <span class="material-icons-round spin">refresh</span>
-        <p>Загрузка погодных данных...</p>
-      </div>`;
-    }
     
-    if (this.error) {
-      return `<div class="weather-error">
-        <span class="material-icons-round">error_outline</span>
-        <p>${this.error}</p>
-      </div>`;
-    }
-    
-    if (!this.weatherData) {
-      return `<div class="weather-empty">
-        <span class="material-icons-round">cloud</span>
-        <p>Нет данных о погоде</p>
-      </div>`;
-    }
-    
-    // Display weather data
-    const weather = this.weatherData;
-    const temp = Math.round(weather.main.temp);
-    const feelsLike = Math.round(weather.main.feels_like);
-    const description = weather.weather[0].description;
-    const icon = weather.weather[0].icon;
-    const iconUrl = `https://openweathermap.org/img/wn/${icon}@2x.png`;
-    
-    return `
-      <div class="weather-data">
-        <div class="weather-main">
-          <div class="weather-city">${weather.name}</div>
-          <div class="weather-temp">${temp}°C</div>
-          <div class="weather-description">${this.capitalizeFirstLetter(description)}</div>
-          <img class="weather-icon" src="${iconUrl}" alt="${description}">
-        </div>
-        
-        <div class="weather-details">
-          <div class="weather-detail">
-            <span class="material-icons-round">thermostat</span>
-            <span class="detail-label">Ощущается как</span>
-            <span class="detail-value">${feelsLike}°C</span>
-          </div>
-          
-          <div class="weather-detail">
-            <span class="material-icons-round">water_drop</span>
-            <span class="detail-label">Влажность</span>
-            <span class="detail-value">${weather.main.humidity}%</span>
-          </div>
-          
-          <div class="weather-detail">
-            <span class="material-icons-round">air</span>
-            <span class="detail-label">Ветер</span>
-            <span class="detail-value">${Math.round(weather.wind.speed)} м/с</span>
-          </div>
-          
-          <div class="weather-detail">
-            <span class="material-icons-round">compress</span>
-            <span class="detail-label">Давление</span>
-            <span class="detail-value">${Math.round(weather.main.pressure * 0.750062)} мм рт.ст.</span>
-          </div>
-        </div>
-      </div>
-    `;
-  }
-
-  // Attach event listeners
-  attachEventListeners() {
-    // Back button
-    this.container.querySelector('.app-back').addEventListener('click', () => {
-      document.querySelector('.app-screen').classList.remove('visible');
+    // Добавляем обработчики событий
+    const refreshButton = this.container.querySelector('.weather-refresh-button');
+    refreshButton.addEventListener('click', () => {
+      AnimationHelper.showToast('Обновление погоды будет доступно в следующем обновлении!');
     });
-
-    // Refresh button
-    this.container.querySelector('.refresh-weather').addEventListener('click', () => {
-      this.fetchWeather();
-    });
-
-    // Search button
-    this.container.querySelector('.search-button').addEventListener('click', () => {
-      const cityInput = this.container.querySelector('.city-input');
-      const newCity = cityInput.value.trim();
-      if (newCity && newCity !== this.city) {
-        this.city = newCity;
-        this.saveCity(newCity);
-        this.fetchWeather();
-      }
-    });
-
-    // Enter key in search input
-    this.container.querySelector('.city-input').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        const newCity = e.target.value.trim();
-        if (newCity && newCity !== this.city) {
-          this.city = newCity;
-          this.saveCity(newCity);
-          this.fetchWeather();
-        }
-      }
-    });
-  }
-
-  // Fetch weather data from API
-  async fetchWeather() {
-    this.isLoading = true;
-    this.error = null;
-    this.updateWeatherContent();
     
-    try {
-      const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&appid=${this.apiKey}&units=metric&lang=ru`);
-      
-      if (!response.ok) {
-        throw new Error(response.status === 404 ? 'Город не найден' : 'Ошибка при получении данных о погоде');
-      }
-      
-      this.weatherData = await response.json();
-      this.isLoading = false;
-      this.updateWeatherContent();
-    } catch (error) {
-      this.isLoading = false;
-      this.error = error.message || 'Произошла ошибка при получении погодных данных';
-      this.updateWeatherContent();
-    }
-  }
-
-  // Update only the weather content section
-  updateWeatherContent() {
-    const weatherContent = this.container.querySelector('.weather-content');
-    if (weatherContent) {
-      weatherContent.innerHTML = this.renderWeatherContent();
-    }
-  }
-
-  // Helper function to capitalize first letter
-  capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    const settingsButton = this.container.querySelector('.weather-settings-button');
+    settingsButton.addEventListener('click', () => {
+      AnimationHelper.showToast('Настройки погоды будут доступны в следующем обновлении!');
+    });
   }
 } 

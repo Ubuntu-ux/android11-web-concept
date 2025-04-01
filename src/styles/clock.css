@@ -1,0 +1,574 @@
+.clock-app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+
+.clock-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background-color: var(--surface);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+
+.clock-header h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.clock-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.clock-actions button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--surface-variant);
+  color: var(--text-primary);
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.clock-actions button:hover {
+  background-color: var(--surface-variant-hover);
+}
+
+.clock-tabs {
+  display: flex;
+  background-color: var(--surface);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  z-index: 1;
+}
+
+.clock-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  color: var(--text-secondary);
+}
+
+.clock-tab.active {
+  color: var(--primary);
+  position: relative;
+}
+
+.clock-tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  height: 3px;
+  background-color: var(--primary);
+  border-radius: 1.5px;
+}
+
+.clock-tab .material-icons-round {
+  font-size: 24px;
+  margin-bottom: 4px;
+}
+
+.tab-label {
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.clock-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Стили для вкладки часов */
+.clock-face {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.digital-time {
+  font-size: 60px;
+  font-weight: 300;
+  margin-bottom: 8px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.digital-time .seconds {
+  font-size: 30px;
+  color: var(--text-secondary);
+}
+
+.date {
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.analog-clock {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  margin-bottom: 32px;
+}
+
+.clock-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  background-color: var(--surface);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hour-hand, .minute-hand, .second-hand {
+  position: absolute;
+  transform-origin: bottom center;
+  top: 0;
+  left: 50%;
+  transition: transform 0.2s cubic-bezier(0.4, 2.08, 0.55, 0.44);
+}
+
+.hour-hand {
+  width: 6px;
+  height: 70px;
+  margin-left: -3px;
+  background-color: var(--text-primary);
+  border-radius: 3px;
+  top: 55px;
+}
+
+.minute-hand {
+  width: 4px;
+  height: 100px;
+  margin-left: -2px;
+  background-color: var(--text-primary);
+  border-radius: 2px;
+  top: 25px;
+}
+
+.second-hand {
+  width: 2px;
+  height: 110px;
+  margin-left: -1px;
+  background-color: var(--primary);
+  border-radius: 1px;
+  top: 15px;
+  transition: transform 0.5s cubic-bezier(0.4, 2.08, 0.55, 0.44);
+}
+
+.clock-center {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  z-index: 10;
+}
+
+.world-clock {
+  width: 100%;
+  margin-top: 24px;
+  border-top: 1px solid var(--divider);
+  padding-top: 24px;
+  text-align: center;
+}
+
+.world-clock h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.world-clock p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* Стили для вкладки будильника */
+.alarms-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.no-alarms-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.no-alarms-message .material-icons-round {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.7;
+}
+
+.no-alarms-message p {
+  margin-bottom: 24px;
+}
+
+.add-alarm-button {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  border-radius: 24px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.add-alarm-button .material-icons-round {
+  margin-right: 8px;
+}
+
+/* Стили для вкладки таймера */
+.timers-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.new-timer {
+  background-color: var(--surface);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.timer-input {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.timer-digit-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.timer-digit-group input {
+  width: 60px;
+  height: 60px;
+  text-align: center;
+  font-size: 24px;
+  border: 2px solid var(--divider);
+  border-radius: 12px;
+  background-color: var(--background);
+  color: var(--text-primary);
+}
+
+.timer-digit-group label {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.timer-separator {
+  font-size: 36px;
+  margin: 0 12px;
+  color: var(--text-secondary);
+  line-height: 60px;
+}
+
+.start-timer-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border-radius: 24px;
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 auto;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.start-timer-button .material-icons-round {
+  margin-right: 8px;
+}
+
+.no-timers-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  color: var(--text-secondary);
+  margin-top: 32px;
+}
+
+.no-timers-message .material-icons-round {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.7;
+}
+
+/* Стили для вкладки секундомера */
+.stopwatch-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.stopwatch-display {
+  margin: 32px 0;
+  text-align: center;
+}
+
+.stopwatch-time {
+  font-size: 56px;
+  font-weight: 300;
+  font-family: 'Roboto', sans-serif;
+}
+
+.stopwatch-milliseconds {
+  font-size: 36px;
+  color: var(--text-secondary);
+}
+
+.stopwatch-controls {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.stopwatch-controls button {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.stopwatch-reset-button {
+  background-color: var(--surface);
+  color: var(--text-primary);
+}
+
+.stopwatch-start-button {
+  background-color: var(--primary);
+  color: white;
+}
+
+.stopwatch-lap-button {
+  background-color: var(--surface);
+  color: var(--text-primary);
+}
+
+.stopwatch-controls button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.stopwatch-laps {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.stopwatch-laps h3 {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.laps-list {
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+/* Темная тема */
+body.dark-theme .clock-app {
+  background-color: var(--dark-background);
+  color: var(--dark-text-primary);
+}
+
+body.dark-theme .clock-header {
+  background-color: var(--dark-surface);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .clock-tabs {
+  background-color: var(--dark-surface);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+body.dark-theme .clock-tab {
+  color: var(--dark-text-secondary);
+}
+
+body.dark-theme .clock-tab.active {
+  color: var(--primary);
+}
+
+body.dark-theme .digital-time .seconds {
+  color: var(--dark-text-secondary);
+}
+
+body.dark-theme .date {
+  color: var(--dark-text-secondary);
+}
+
+body.dark-theme .clock-circle {
+  background-color: var(--dark-surface);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .hour-hand,
+body.dark-theme .minute-hand {
+  background-color: var(--dark-text-primary);
+}
+
+body.dark-theme .second-hand {
+  background-color: var(--primary);
+}
+
+body.dark-theme .world-clock {
+  border-top-color: var(--dark-divider);
+}
+
+body.dark-theme .world-clock p,
+body.dark-theme .no-alarms-message,
+body.dark-theme .no-timers-message {
+  color: var(--dark-text-secondary);
+}
+
+body.dark-theme .new-timer {
+  background-color: var(--dark-surface);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .timer-digit-group input {
+  border-color: var(--dark-divider);
+  background-color: var(--dark-background);
+  color: var(--dark-text-primary);
+}
+
+body.dark-theme .timer-digit-group label,
+body.dark-theme .timer-separator {
+  color: var(--dark-text-secondary);
+}
+
+body.dark-theme .stopwatch-milliseconds {
+  color: var(--dark-text-secondary);
+}
+
+body.dark-theme .stopwatch-reset-button,
+body.dark-theme .stopwatch-lap-button {
+  background-color: var(--dark-surface);
+  color: var(--dark-text-primary);
+}
+
+/* Анимации */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.digital-time {
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.hour-hand {
+  transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.minute-hand {
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.second-hand {
+  transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Адаптивность */
+@media (max-width: 480px) {
+  .digital-time {
+    font-size: 48px;
+  }
+  
+  .analog-clock {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .hour-hand {
+    height: 60px;
+    top: 40px;
+  }
+  
+  .minute-hand {
+    height: 80px;
+    top: 20px;
+  }
+  
+  .second-hand {
+    height: 90px;
+    top: 10px;
+  }
+  
+  .timer-digit-group input {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+  
+  .timer-separator {
+    line-height: 50px;
+  }
+  
+  .stopwatch-time {
+    font-size: 48px;
+  }
+  
+  .stopwatch-milliseconds {
+    font-size: 30px;
+  }
+} 
