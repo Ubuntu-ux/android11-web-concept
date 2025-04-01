@@ -43,18 +43,24 @@
   cursor: pointer;
 }
 
-/* Dark Mode */
+/* Dark Mode - Усиленные стили */
 .dark-mode .app-screen {
-  background-color: #121212;
-  color: #f5f5f5;
+  background-color: #121212 !important;
+  color: #f5f5f5 !important;
 }
 
 .dark-mode .app-header, 
 .dark-mode .calculator-header, 
 .dark-mode .notes-header,
 .dark-mode .weather-header {
-  background-color: #1f1f1f;
-  border-bottom: 1px solid #333;
+  background-color: #1f1f1f !important;
+  border-bottom: 1px solid #333 !important;
+  color: #f5f5f5 !important;
+}
+
+.dark-mode .app-title,
+.dark-mode .material-icons-round {
+  color: #f5f5f5 !important;
 }
 
 /* Calculator App */
@@ -123,36 +129,36 @@
   background-color: #dadce0;
 }
 
-/* Dark Mode Calculator */
+/* Dark Mode Calculator - Усиленные стили */
 .dark-mode .calculator-display {
-  background-color: #2d2d2d;
+  background-color: #2d2d2d !important;
 }
 
 .dark-mode .expression {
-  color: #9aa0a6;
+  color: #9aa0a6 !important;
 }
 
 .dark-mode .result {
-  color: #e8eaed;
+  color: #e8eaed !important;
 }
 
 .dark-mode .calc-button {
-  background-color: #2d2d2d;
-  color: #e8eaed;
+  background-color: #2d2d2d !important;
+  color: #e8eaed !important;
 }
 
 .dark-mode .calc-button.operator {
-  background-color: #3c4043;
-  color: #8ab4f8;
+  background-color: #3c4043 !important;
+  color: #8ab4f8 !important;
 }
 
 .dark-mode .calc-button.equals {
-  background-color: #8ab4f8;
-  color: #202124;
+  background-color: #8ab4f8 !important;
+  color: #202124 !important;
 }
 
 .dark-mode .calc-button.function {
-  background-color: #3c4043;
+  background-color: #3c4043 !important;
 }
 
 /* Notes App */
@@ -250,23 +256,28 @@
   cursor: pointer;
 }
 
-/* Dark Mode Notes */
+/* Dark Mode Notes - Усиленные стили */
 .dark-mode .note-item {
-  background-color: #2d2d2d;
+  background-color: #2d2d2d !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
 }
 
 .dark-mode .note-preview {
-  color: #9aa0a6;
+  color: #9aa0a6 !important;
 }
 
 .dark-mode .note-date {
-  color: #9aa0a6;
+  color: #9aa0a6 !important;
 }
 
 .dark-mode .note-title-input,
 .dark-mode .note-content-input {
-  background-color: #121212;
-  color: #e8eaed;
+  background-color: #121212 !important;
+  color: #e8eaed !important;
+}
+
+.dark-mode .empty-notes {
+  color: #9aa0a6 !important;
 }
 
 /* Weather App */
@@ -410,39 +421,60 @@
   font-weight: 500;
 }
 
-/* Dark Mode Weather */
+/* Dark Mode Weather - Усиленные стили */
 .dark-mode .city-search {
-  background-color: #1f1f1f;
+  background-color: #1f1f1f !important;
 }
 
 .dark-mode .city-input {
-  background-color: #2d2d2d;
-  color: #e8eaed;
-  border-color: #5f6368;
+  background-color: #2d2d2d !important;
+  color: #e8eaed !important;
+  border-color: #5f6368 !important;
 }
 
 .dark-mode .weather-description {
-  color: #9aa0a6;
+  color: #9aa0a6 !important;
 }
 
 .dark-mode .weather-details {
-  background-color: #2d2d2d;
+  background-color: #2d2d2d !important;
 }
 
 .dark-mode .weather-detail {
-  border-bottom-color: #5f6368;
+  border-bottom-color: #5f6368 !important;
 }
 
 .dark-mode .weather-loading,
 .dark-mode .weather-error,
 .dark-mode .weather-empty {
-  color: #9aa0a6;
+  color: #9aa0a6 !important;
 }
 
 .dark-mode .weather-empty .material-icons-round {
-  color: #8ab4f8;
+  color: #8ab4f8 !important;
 }
 
 .dark-mode .weather-detail .material-icons-round {
-  color: #8ab4f8;
+  color: #8ab4f8 !important;
+}
+
+/* Усиление контраста для темной темы и белого фона */
+.app-icon-img span.material-icons-round {
+  color: #ffffff !important;
+  font-size: 24px !important;
+}
+
+.dark-mode .app-icon-img {
+  background-color: #3c4043 !important;
+}
+
+.app-icon-img {
+  background-color: rgba(66, 133, 244, 0.9) !important;
+  border-radius: 50% !important;
+  width: 56px !important;
+  height: 56px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 auto !important;
 } 
