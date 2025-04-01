@@ -1,0 +1,202 @@
+/* Settings Screen Styles */
+.settings-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  z-index: 1200;
+  display: none;
+  flex-direction: column;
+  color: var(--dark-text);
+  overflow-y: auto;
+}
+
+.settings-screen.visible {
+  display: flex;
+}
+
+.settings-header {
+  height: 56px;
+  background-color: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.settings-header .material-icons-round {
+  margin-right: 16px;
+}
+
+.settings-title {
+  font-size: 20px;
+  font-weight: 500;
+  flex: 1;
+}
+
+.settings-content {
+  flex: 1;
+  padding: 8px 0;
+}
+
+.settings-section {
+  margin-bottom: 8px;
+}
+
+.settings-section-title {
+  font-size: 14px;
+  color: var(--primary-color);
+  font-weight: 500;
+  padding: 16px 16px 8px;
+}
+
+.settings-item {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--divider-color);
+  cursor: pointer;
+}
+
+.settings-item:active {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.settings-item-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 16px;
+  color: var(--icon-color);
+}
+
+.settings-item-content {
+  flex: 1;
+}
+
+.settings-item-title {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.settings-item-subtitle {
+  font-size: 14px;
+  color: var(--medium-text);
+}
+
+.settings-item-right {
+  color: var(--medium-text);
+  font-size: 14px;
+}
+
+/* About Phone Screen */
+.about-phone-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  z-index: 1300;
+  display: none;
+  flex-direction: column;
+  color: var(--dark-text);
+  overflow-y: auto;
+}
+
+.about-phone-screen.visible {
+  display: flex;
+}
+
+.about-phone-logo {
+  width: 120px;
+  height: 120px;
+  margin: 32px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  border-radius: 60px;
+  color: white;
+}
+
+.about-phone-logo .material-icons-round {
+  font-size: 64px;
+}
+
+.about-phone-info {
+  padding: 0 16px;
+}
+
+.about-info-item {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.about-info-label {
+  font-size: 14px;
+  color: var(--medium-text);
+  margin-bottom: 4px;
+}
+
+.about-info-value {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Language Selector Screen */
+.language-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ffffff;
+  z-index: 1300;
+  display: none;
+  flex-direction: column;
+  color: var(--dark-text);
+  overflow-y: auto;
+}
+
+.language-screen.visible {
+  display: flex;
+}
+
+.language-list {
+  padding: 8px 0;
+}
+
+.language-item {
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--divider-color);
+  cursor: pointer;
+}
+
+.language-item:active {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.language-item-content {
+  flex: 1;
+}
+
+.language-check {
+  color: var(--primary-color);
+}
+
+.language-name {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.language-native {
+  font-size: 14px;
+  color: var(--medium-text);
+}

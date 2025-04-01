@@ -1,0 +1,186 @@
+/* Reset and global styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+body {
+  font-family: 'Inter', 'Roboto', sans-serif;
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  height: 100%;
+  overflow: hidden;
+  color: #212121;
+  position: fixed;
+  width: 100%;
+  touch-action: manipulation;
+}
+
+:root {
+  --primary-color: #4285F4;
+  --secondary-color: #0F9D58;
+  --accent-color: #F4B400;
+  --error-color: #DB4437;
+  --background-color: #FFFFFF;
+  --dark-text: #212121;
+  --medium-text: #757575;
+  --light-text: #BDBDBD;
+  --divider-color: #E0E0E0;
+  --icon-color: #5F6368;
+  --status-bar-height: 28px;
+  --navigation-bar-height: 48px;
+  --dock-height: 72px;
+  --font-primary: 'Inter', 'Roboto', sans-serif;
+}
+
+.android-phone {
+  width: 100%;
+  max-width: 430px;
+  height: 100vh;
+  margin: 0 auto;
+  background-color: var(--background-color);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-primary);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+/* Status Bar */
+.status-bar {
+  height: var(--status-bar-height);
+  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.status-bar-left {
+  display: flex;
+  align-items: center;
+}
+
+.status-bar-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon-small {
+  font-size: 16px !important;
+}
+
+/* Common UI elements */
+.material-icons-round {
+  font-size: 24px;
+}
+
+/* Navigation Bar */
+.navigation-bar {
+  height: var(--navigation-bar-height);
+  background-color: transparent;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.nav-button {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  border-radius: 50%;
+}
+
+.nav-button:active {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Button and interactive element styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:active {
+  background-color: #3b78e7;
+}
+
+/* Media query for actual mobile devices */
+@media (max-width: 767px) {
+  .android-phone {
+    height: 100vh;
+    width: 100vw;
+    max-width: 100%;
+  }
+}
+
+/* For devices with notches */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .android-phone {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Dark mode styles */
+body.dark-mode .settings-screen,
+body.dark-mode .about-phone-screen,
+body.dark-mode .language-screen {
+  background-color: #121212;
+  color: rgba(255, 255, 255, 0.87);
+}
+
+body.dark-mode .settings-item,
+body.dark-mode .about-info-item,
+body.dark-mode .language-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .settings-item-subtitle,
+body.dark-mode .about-info-label,
+body.dark-mode .language-native {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+body.dark-mode .settings-item:active,
+body.dark-mode .language-item:active {
+  background-color: rgba(255, 255, 255, 0.05);
+}

@@ -1,0 +1,295 @@
+/* Widget Styles for Android 11 Web */
+
+/* Widget Container */
+.widget-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* Base Widget */
+.widget {
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  min-height: 100px;
+  position: relative;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.widget:active {
+  transform: scale(0.98);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Dark Mode Widgets */
+.dark-mode .widget {
+  background-color: rgba(40, 40, 40, 0.9);
+  color: #e8eaed;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Clock Widget */
+.clock-widget {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.clock-time {
+  font-size: 48px;
+  font-weight: 300;
+  margin-bottom: 8px;
+}
+
+.clock-date {
+  font-size: 16px;
+  color: #5f6368;
+}
+
+.dark-mode .clock-date {
+  color: #9aa0a6;
+}
+
+/* Weather Widget */
+.weather-widget {
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-widget-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  gap: 8px;
+  color: #5f6368;
+}
+
+.weather-widget-city {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.weather-widget-info {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.weather-widget-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.weather-widget-temp {
+  font-size: 32px;
+  font-weight: 300;
+}
+
+.weather-widget-desc {
+  color: #5f6368;
+  font-size: 14px;
+}
+
+.dark-mode .weather-widget-desc {
+  color: #9aa0a6;
+}
+
+/* Notes Widget */
+.notes-widget {
+  display: flex;
+  flex-direction: column;
+}
+
+.notes-widget-title {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.notes-widget-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  gap: 8px;
+  color: #5f6368;
+}
+
+.notes-widget-item {
+  padding: 8px 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.notes-widget-item:last-child {
+  border-bottom: none;
+}
+
+.notes-widget-item-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.notes-widget-item-preview {
+  font-size: 12px;
+  color: #5f6368;
+}
+
+.dark-mode .notes-widget-item {
+  border-bottom-color: #5f6368;
+}
+
+.dark-mode .notes-widget-item-preview {
+  color: #9aa0a6;
+}
+
+/* Calendar Widget */
+.calendar-widget {
+  display: flex;
+  flex-direction: column;
+}
+
+.calendar-widget-header {
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.calendar-month-year {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.calendar-days-header {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 8px;
+}
+
+.calendar-day-name {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: #5f6368;
+}
+
+.calendar-days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendar-day {
+  text-align: center;
+  font-size: 14px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.calendar-day.current {
+  background-color: #1a73e8;
+  color: white;
+}
+
+.calendar-day.empty {
+  visibility: hidden;
+}
+
+.dark-mode .calendar-day-name {
+  color: #9aa0a6;
+}
+
+.dark-mode .calendar-day.current {
+  background-color: #8ab4f8;
+  color: #202124;
+}
+
+/* Widget Management */
+.widget-menu, .widget-options {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  padding: 16px;
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  animation: slide-up 0.3s ease;
+}
+
+.widget-menu-title, .widget-options-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.widget-option {
+  padding: 16px;
+  border-bottom: 1px solid #e5e5e5;
+  cursor: pointer;
+}
+
+.widget-option:last-child {
+  border-bottom: none;
+}
+
+.widget-option.remove {
+  color: #f44336;
+}
+
+.widget-menu-close, .widget-options-close {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin-top: 16px;
+  background-color: #f8f9fa;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.dark-mode .widget-menu, 
+.dark-mode .widget-options {
+  background-color: #202124;
+  color: #e8eaed;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .widget-option {
+  border-bottom-color: #5f6368;
+}
+
+.dark-mode .widget-menu-close, 
+.dark-mode .widget-options-close {
+  background-color: #3c4043;
+  border-color: #5f6368;
+  color: #e8eaed;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+} 

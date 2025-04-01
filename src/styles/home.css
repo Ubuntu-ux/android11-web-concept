@@ -1,0 +1,145 @@
+/* Home Screen Styles */
+.home-screen {
+  flex: 1;
+  background: linear-gradient(135deg, #8e24aa, #6200ea);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding-top: calc(var(--status-bar-height) + 8px);
+  padding-bottom: calc(var(--navigation-bar-height) + var(--dock-height) + 8px);
+}
+
+/* App Grid */
+.app-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 16px;
+  padding: 16px;
+  margin-top: auto;
+  margin-bottom: 8px;
+}
+
+.app-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.app-icon-img {
+  width: 56px;
+  height: 56px;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  color: white;
+}
+
+.app-name {
+  font-size: 11px;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 64px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* App icon backgrounds */
+#phone, #phone-dock {
+  background-color: #43a047;
+}
+
+#messages, #messages-dock {
+  background-color: #1e88e5;
+}
+
+#chrome, #chrome-dock {
+  background-color: #d32f2f;
+}
+
+#camera, #camera-dock {
+  background-color: #0097a7;
+}
+
+#gallery {
+  background-color: #f57c00;
+}
+
+#settings {
+  background-color: #757575;
+}
+
+#playstore {
+  background-color: #00c853;
+}
+
+#maps {
+  background-color: #fbc02d;
+}
+
+#gmail {
+  background-color: #d32f2f;
+}
+
+#youtube {
+  background-color: #d32f2f;
+}
+
+#calendar {
+  background-color: #0288d1;
+}
+
+#photos {
+  background-color: #8e24aa;
+}
+
+#app-drawer {
+  background-color: transparent;
+  box-shadow: none;
+}
+
+/* Dock */
+.dock {
+  position: absolute;
+  bottom: var(--navigation-bar-height);
+  left: 0;
+  right: 0;
+  height: var(--dock-height);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 0 16px;
+  z-index: 900;
+}
+
+.dock .app-icon {
+  margin: 0 4px;
+}
+
+.dock .app-icon-img {
+  width: 52px;
+  height: 52px;
+}
+
+/* Active state for app icons */
+.app-icon-img:active {
+  transform: scale(0.9);
+  transition: transform 0.1s ease-in-out;
+}
+
+/* Interactive elements */
+.app-icon, .nav-button {
+  cursor: pointer;
+}

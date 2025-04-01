@@ -1,0 +1,448 @@
+/* App Styles for Android 11 Web */
+
+/* App Screen Container */
+.app-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+  z-index: 10;
+  display: none;
+  overflow: hidden;
+  transition: transform 0.3s, opacity 0.3s;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.app-screen.visible {
+  display: block;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.app-header, .calculator-header, .notes-header, .weather-header {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 16px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e5e5e5;
+  position: relative;
+}
+
+.app-title {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.app-back, .new-note, .refresh-weather, .back-to-notes, .save-note {
+  cursor: pointer;
+}
+
+/* Dark Mode */
+.dark-mode .app-screen {
+  background-color: #121212;
+  color: #f5f5f5;
+}
+
+.dark-mode .app-header, 
+.dark-mode .calculator-header, 
+.dark-mode .notes-header,
+.dark-mode .weather-header {
+  background-color: #1f1f1f;
+  border-bottom: 1px solid #333;
+}
+
+/* Calculator App */
+.calculator-app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.calculator-display {
+  background-color: #f1f3f4;
+  padding: 20px 16px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+}
+
+.expression {
+  font-size: 18px;
+  color: #5f6368;
+  min-height: 24px;
+  word-break: break-all;
+}
+
+.result {
+  font-size: 36px;
+  color: #202124;
+  margin-top: 8px;
+  word-break: break-all;
+}
+
+.calculator-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  flex-grow: 1;
+}
+
+.calc-button {
+  font-size: 24px;
+  border: none;
+  background-color: #f8f9fa;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.2s;
+}
+
+.calc-button:active {
+  background-color: #e8eaed;
+}
+
+.calc-button.operator {
+  background-color: #f1f3f4;
+  color: #1a73e8;
+}
+
+.calc-button.equals {
+  background-color: #1a73e8;
+  color: white;
+}
+
+.calc-button.function {
+  background-color: #dadce0;
+}
+
+/* Dark Mode Calculator */
+.dark-mode .calculator-display {
+  background-color: #2d2d2d;
+}
+
+.dark-mode .expression {
+  color: #9aa0a6;
+}
+
+.dark-mode .result {
+  color: #e8eaed;
+}
+
+.dark-mode .calc-button {
+  background-color: #2d2d2d;
+  color: #e8eaed;
+}
+
+.dark-mode .calc-button.operator {
+  background-color: #3c4043;
+  color: #8ab4f8;
+}
+
+.dark-mode .calc-button.equals {
+  background-color: #8ab4f8;
+  color: #202124;
+}
+
+.dark-mode .calc-button.function {
+  background-color: #3c4043;
+}
+
+/* Notes App */
+.notes-app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.notes-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.note-item {
+  background-color: #fff;
+  border-radius: 8px;
+  margin-bottom: 12px;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.note-item:active {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.note-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.note-preview {
+  font-size: 14px;
+  color: #5f6368;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+.note-date {
+  font-size: 12px;
+  color: #80868b;
+}
+
+.empty-notes {
+  text-align: center;
+  color: #80868b;
+  padding: 40px 0;
+}
+
+/* Note Editor */
+.note-editor {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+
+.note-title-input, .note-content-input {
+  border: none;
+  outline: none;
+  font-family: 'Roboto', sans-serif;
+  width: 100%;
+}
+
+.note-title-input {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.note-content-input {
+  font-size: 16px;
+  flex-grow: 1;
+  resize: none;
+  line-height: 1.5;
+}
+
+.note-actions {
+  padding: 16px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.delete-note {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Dark Mode Notes */
+.dark-mode .note-item {
+  background-color: #2d2d2d;
+}
+
+.dark-mode .note-preview {
+  color: #9aa0a6;
+}
+
+.dark-mode .note-date {
+  color: #9aa0a6;
+}
+
+.dark-mode .note-title-input,
+.dark-mode .note-content-input {
+  background-color: #121212;
+  color: #e8eaed;
+}
+
+/* Weather App */
+.weather-app {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.city-search {
+  display: flex;
+  padding: 16px;
+  background-color: #f8f9fa;
+}
+
+.city-input {
+  flex-grow: 1;
+  padding: 10px 12px;
+  border: 1px solid #dadce0;
+  border-radius: 4px 0 0 4px;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-button {
+  background-color: #1a73e8;
+  color: white;
+  border: none;
+  padding: 0 16px;
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.weather-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px;
+  overflow-y: auto;
+}
+
+.weather-loading, .weather-error, .weather-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: #5f6368;
+  text-align: center;
+}
+
+.weather-loading .spin {
+  animation: spin 1.5s linear infinite;
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.weather-error .material-icons-round,
+.weather-empty .material-icons-round {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: #f44336;
+}
+
+.weather-empty .material-icons-round {
+  color: #1a73e8;
+}
+
+.weather-data {
+  width: 100%;
+}
+
+.weather-main {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.weather-city {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.weather-temp {
+  font-size: 64px;
+  font-weight: 300;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.weather-description {
+  font-size: 18px;
+  color: #5f6368;
+  margin-bottom: 8px;
+}
+
+.weather-icon {
+  width: 100px;
+  height: 100px;
+}
+
+.weather-details {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 16px;
+}
+
+.weather-detail {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.weather-detail:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.weather-detail .material-icons-round {
+  color: #1a73e8;
+  margin-right: 16px;
+}
+
+.detail-label {
+  flex-grow: 1;
+  font-size: 16px;
+}
+
+.detail-value {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Dark Mode Weather */
+.dark-mode .city-search {
+  background-color: #1f1f1f;
+}
+
+.dark-mode .city-input {
+  background-color: #2d2d2d;
+  color: #e8eaed;
+  border-color: #5f6368;
+}
+
+.dark-mode .weather-description {
+  color: #9aa0a6;
+}
+
+.dark-mode .weather-details {
+  background-color: #2d2d2d;
+}
+
+.dark-mode .weather-detail {
+  border-bottom-color: #5f6368;
+}
+
+.dark-mode .weather-loading,
+.dark-mode .weather-error,
+.dark-mode .weather-empty {
+  color: #9aa0a6;
+}
+
+.dark-mode .weather-empty .material-icons-round {
+  color: #8ab4f8;
+}
+
+.dark-mode .weather-detail .material-icons-round {
+  color: #8ab4f8;
+} 
