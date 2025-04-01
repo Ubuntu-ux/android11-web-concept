@@ -3,12 +3,17 @@ import icons from './assets/icons.js';
 import AppManager from './apps/app-manager.js';
 import WidgetManager from './widgets.js';
 import WallpaperManager from './wallpapers.js';
+import RecentsManager from './recents.js';
 import { SettingsManager } from './utils.js';
+import { RippleEffect, AnimationHelper } from './animations.js';
 
 // Глобальные переменные для доступа к менеджерам
 let appManager;
 let widgetManager;
 let wallpaperManager;
+let recentsManager;
+let rippleEffect;
+let animationHelper;
 
 document.addEventListener("DOMContentLoaded", function() {
   // Сразу устанавливаем тёмную тему по умолчанию
@@ -58,75 +63,32 @@ document.addEventListener("DOMContentLoaded", function() {
     handleSwipeGesture();
   }, false);
 
+  // Handle swipe gesture to show/hide notification panel
   function handleSwipeGesture() {
     const swipeDistance = touchEndY - touchStartY;
-
-    // If swipe down from top of screen, show notification panel
-    if (touchStartY < 100 && swipeDistance > 50) {
+    
+    // Если свайп вниз в верхней части экрана
+    if (swipeDistance > 70 && touchStartY < 100) {
       showNotificationPanel();
+      return;
     }
-
-    // If swipe up when notification panel is visible, hide it
-    if (notificationPanel.classList.contains("visible") && swipeDistance < -50) {
+    
+    // Если свайп вверх, когда панель уведомлений открыта
+    if (swipeDistance < -70 && notificationPanel.classList.contains("visible")) {
       hideNotificationPanel();
+      return;
     }
   }
 
-  // Make status bar clickable to show notification panel
-  statusBar.addEventListener("click", function() {
-    console.log("Status bar clicked");
-    showNotificationPanel();
-  });
-
-  // Show notification panel
+  // Show notification panel with animation
   function showNotificationPanel() {
-    console.log("Showing notification panel");
     notificationPanel.classList.add("visible");
   }
 
-  // Hide notification panel
+  // Hide notification panel with animation
   function hideNotificationPanel() {
-    console.log("Hiding notification panel");
     notificationPanel.classList.remove("visible");
   }
-
-  // For desktop testing: allow status bar click to toggle notification panel
-  document.addEventListener("click", function(event) {
-    if (event.target.closest(".status-bar")) {
-      if (notificationPanel.classList.contains("visible")) {
-        hideNotificationPanel();
-      } else {
-        showNotificationPanel();
-      }
-    }
-  });
-
-  // Tap and hold on home screen (empty area) to change wallpaper options
-  homeScreen.addEventListener("long-press", function(event) {
-    // Prevent triggering if tapping on an app icon
-    if (!event.target.closest(".app-icon") && !event.target.closest(".dock") && !event.target.closest(".navigation-bar")) {
-      alert("Wallpaper options would show here");
-    }
-  });
-
-  // Long press polyfill
-  let timer;
-  homeScreen.addEventListener("touchstart", function(event) {
-    if (!event.target.closest(".app-icon") && !event.target.closest(".dock") && !event.target.closest(".navigation-bar")) {
-      timer = setTimeout(() => {
-        const customEvent = new Event("long-press");
-        homeScreen.dispatchEvent(customEvent);
-      }, 800);
-    }
-  });
-
-  homeScreen.addEventListener("touchend", function() {
-    clearTimeout(timer);
-  });
-
-  homeScreen.addEventListener("touchmove", function() {
-    clearTimeout(timer);
-  });
 
   // Handle quick toggle clicks
   quickToggles.forEach(toggle => {
@@ -139,12 +101,22 @@ document.addEventListener("DOMContentLoaded", function() {
         // Активируем тёмный режим сразу
         document.querySelector('.quick-toggle:nth-child(6)').classList.add('active');
       }
+      
+      // Показываем Toast-уведомление о переключении
+      const toggleName = this.querySelector(".label").textContent;
+      const isActive = this.classList.contains("active");
+      const statusText = isActive ? "Включено" : "Выключено";
+      AnimationHelper.showToast(`${toggleName}: ${statusText}`);
     });
   });
 
-  // Handle app icon clicks
+  // Handle app icon clicks with improved feedback
   appIcons.forEach(icon => {
     icon.addEventListener("click", function() {
+      // Добавляем визуальный эффект нажатия
+      this.classList.add('app-pressed');
+      setTimeout(() => this.classList.remove('app-pressed'), 300);
+      
       const appIconImg = this.querySelector(".app-icon-img");
       const appId = appIconImg ? appIconImg.id.replace("-dock", "") : "";
 
@@ -157,244 +129,318 @@ document.addEventListener("DOMContentLoaded", function() {
       // Проверяем, является ли нажатое приложение одним из наших специальных приложений
       if (["calculator", "notes", "weather"].includes(appId) && appManager) {
         appManager.launchApp(appId);
+        
+        // Добавляем в недавние приложения
+        if (recentsManager) {
+          const appName = this.querySelector(".app-name")?.textContent || 
+                          getAppNameById(appId);
+          const appIcon = getAppIconById(appId);
+          recentsManager.addAppToRecents(appId, appName, appIcon);
+        }
         return;
       }
 
-      const appName = this.querySelector(".app-name")?.textContent || appId;
-      if (appId !== "app-drawer") {
-        alert(getTranslatedText("Opening") + " " + appName);
-      }
+      // Для всех других приложений показываем экран "В разработке"
+      import('./dev-app.js')
+        .then(module => {
+          const DevApp = module.default;
+          const appName = this.querySelector(".app-name")?.textContent || appId;
+          DevApp.showDevApp(appName);
+          
+          // Добавляем в недавние приложения
+          if (recentsManager) {
+            const appIcon = this.querySelector(".material-icons-round")?.textContent || "apps";
+            recentsManager.addAppToRecents(appId, appName, appIcon);
+          }
+        });
     });
   });
 
-  // Settings screen handlers
-  document.getElementById("settings-back").addEventListener("click", hideSettingsScreen);
-  document.getElementById("about-phone").addEventListener("click", showAboutPhoneScreen);
-  document.getElementById("language-settings").addEventListener("click", showLanguageScreen);
+  // Settings screen handlers with improved animations
+  document.getElementById("settings-back").addEventListener("click", function() {
+    hideSettingsScreen();
+    AnimationHelper.showToast("Настройки закрыты");
+  });
+  
+  document.getElementById("about-phone").addEventListener("click", function() {
+    showAboutPhoneScreen();
+    AnimationHelper.showToast("О телефоне");
+  });
+  
+  document.getElementById("language-settings").addEventListener("click", function() {
+    showLanguageScreen();
+    AnimationHelper.showToast("Языковые настройки");
+  });
+  
   document.getElementById("about-back").addEventListener("click", hideAboutPhoneScreen);
   document.getElementById("language-back").addEventListener("click", hideLanguageScreen);
 
-  // Language switching
-  document.getElementById("lang-ru").addEventListener("click", () => {
-    setLanguage("ru");
-    document.getElementById("lang-ru").querySelector(".language-check").style.display = "block";
-    document.getElementById("lang-en").querySelector(".language-check")?.remove();
-
-    const checkIcon = document.createElement("span");
-    checkIcon.className = "material-icons-round language-check";
-    checkIcon.textContent = "check";
-    document.getElementById("lang-ru").appendChild(checkIcon);
-
-    // Update language subtitle
-    const languageSubtitle = document.querySelector("#language-settings .settings-item-subtitle");
-    languageSubtitle.textContent = "Русский";
-
-    setTimeout(hideLanguageScreen, 500);
-  });
-
-  document.getElementById("lang-en").addEventListener("click", () => {
-    setLanguage("en");
-    document.getElementById("lang-en").querySelector(".language-check") ||
-      document.getElementById("lang-en").appendChild((() => {
-        const checkIcon = document.createElement("span");
-        checkIcon.className = "material-icons-round language-check";
-        checkIcon.textContent = "check";
-        return checkIcon;
-      })());
-
-    document.getElementById("lang-ru").querySelector(".language-check")?.remove();
-
-    // Update language subtitle
-    const languageSubtitle = document.querySelector("#language-settings .settings-item-subtitle");
-    languageSubtitle.textContent = "English";
-
-    setTimeout(hideLanguageScreen, 500);
-  });
-
-  // Handle navigation button clicks
-  navigationButtons.forEach(button => {
-    button.addEventListener("click", function() {
-      const buttonId = this.id;
-
-      switch (buttonId) {
-        case "back":
-          if (aboutPhoneScreen.classList.contains("visible")) {
-            hideAboutPhoneScreen();
-          } else if (languageScreen.classList.contains("visible")) {
-            hideLanguageScreen();
-          } else if (settingsScreen.classList.contains("visible")) {
-            hideSettingsScreen();
-          } else {
-            hideNotificationPanel();
-          }
-          break;
-        case "home":
-          hideAllScreens();
-          break;
-        case "recents":
-          alert(getTranslatedText("Recent apps would show here"));
-          break;
-      }
+  // Language selection
+  document.querySelectorAll(".language-item").forEach(item => {
+    item.addEventListener("click", function() {
+      const lang = this.getAttribute("data-lang");
+      setLanguage(lang);
+      
+      // Visual feedback
+      document.querySelectorAll(".language-item .language-check span").forEach(check => {
+        check.textContent = "";
+      });
+      this.querySelector(".language-check span").textContent = "check";
+      
+      // Show toast
+      const langName = this.querySelector(".language-name").textContent;
+      AnimationHelper.showToast(`Язык изменен на: ${langName}`);
     });
   });
 
-  // Hide notification panel when clicking home screen
-  homeScreen.addEventListener("click", function(event) {
-    // Only hide if clicking directly on home screen (not on an app)
-    if (notificationPanel.classList.contains("visible") &&
-        event.target === homeScreen) {
-      hideNotificationPanel();
-    }
-  });
-
-  // Double tap to wake (just toggles notification panel in this demo)
-  let lastTap = 0;
-  document.addEventListener("touchend", function(event) {
-    const currentTime = new Date().getTime();
-    const tapLength = currentTime - lastTap;
-
-    if (tapLength < 300 && tapLength > 0) {
-      // Double tap detected
-      if (!notificationPanel.classList.contains("visible")) {
-        showNotificationPanel();
-      } else {
-        hideNotificationPanel();
-      }
-    }
-
-    lastTap = currentTime;
-  });
-
-  // Add SVG icons to app icons
-  document.querySelectorAll('.app-icon-img').forEach(iconElement => {
-    const iconId = iconElement.id.replace('-dock', '');
-    if (icons[iconId]) {
-      // Clear current content and add SVG
-      while (iconElement.firstChild) {
-        iconElement.removeChild(iconElement.firstChild);
-      }
-      iconElement.innerHTML = icons[iconId];
-    }
-  });
-
-  // Add fake notification icons
-  const createIcon = (name) => {
-    // Create a canvas for the icon
-    const canvas = document.createElement('canvas');
-    canvas.width = 48;
-    canvas.height = 48;
-    const ctx = canvas.getContext('2d');
-
-    // Draw a colored circle
-    ctx.beginPath();
-    ctx.arc(24, 24, 20, 0, 2 * Math.PI);
-
-    // Set color based on app name
-    if (name === 'gmail') {
-      ctx.fillStyle = '#DB4437';
-    } else if (name === 'messages') {
-      ctx.fillStyle = '#4285F4';
-    } else {
-      ctx.fillStyle = '#0F9D58';
-    }
-
-    ctx.fill();
-
-    // Draw text or initial
-    ctx.fillStyle = 'white';
-    ctx.font = 'bold 20px Inter';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(name.charAt(0).toUpperCase(), 24, 24);
-
-    return canvas.toDataURL();
-  };
-
-  // Set notification app icons
-  document.querySelectorAll('.notification-icon').forEach(icon => {
-    const appName = icon.alt.toLowerCase();
-    icon.src = createIcon(appName);
-  });
-
-  // Show Settings Screen
+  // Show settings screen with animation
   function showSettingsScreen() {
     settingsScreen.classList.add("visible");
   }
 
-  // Hide Settings Screen
+  // Hide settings screen with animation
   function hideSettingsScreen() {
     settingsScreen.classList.remove("visible");
   }
 
-  // Show About Phone Screen
+  // Show about phone screen with animation
   function showAboutPhoneScreen() {
     aboutPhoneScreen.classList.add("visible");
   }
 
-  // Hide About Phone Screen
+  // Hide about phone screen with animation
   function hideAboutPhoneScreen() {
     aboutPhoneScreen.classList.remove("visible");
   }
 
-  // Show Language Screen
+  // Show language screen with animation
   function showLanguageScreen() {
     languageScreen.classList.add("visible");
   }
 
-  // Hide Language Screen
+  // Hide language screen with animation
   function hideLanguageScreen() {
     languageScreen.classList.remove("visible");
   }
 
-  // Hide all screens (go to home)
-  function hideAllScreens() {
-    hideNotificationPanel();
-    hideSettingsScreen();
-    hideAboutPhoneScreen();
-    hideLanguageScreen();
-  }
-
-  // Set language for UI
+  // Set app language
   function setLanguage(lang) {
     currentLanguage = lang;
-
-    // Update all translated elements
-    document.querySelectorAll('[data-en]').forEach(el => {
-      el.textContent = el.getAttribute(`data-${lang}`);
+    
+    // Toggle check mark icons
+    document.querySelectorAll(".language-item").forEach(item => {
+      const itemLang = item.getAttribute("data-lang");
+      const checkIcon = item.querySelector(".language-check .material-icons-round");
+      checkIcon.textContent = itemLang === lang ? "check" : "";
     });
+    
+    // Save language setting
+    SettingsManager.setSetting('language', lang);
+    
+    // Update texts based on language
+    updateTexts();
+  }
 
-    // Set HTML lang attribute
-    document.documentElement.lang = lang;
+  // Update UI texts based on current language
+  function updateTexts() {
+    // Update quick toggle labels
+    const toggleLabels = {
+      "ru": ["Wi-Fi", "Bluetooth", "Не беспокоить", "Фонарик", "Авто", "Тёмная тема", "Поворот", "Экономия"],
+      "en": ["Wi-Fi", "Bluetooth", "Do Not Disturb", "Flashlight", "Auto", "Dark Mode", "Rotation", "Battery"]
+    };
+    
+    document.querySelectorAll(".quick-toggle .label").forEach((label, index) => {
+      if (toggleLabels[currentLanguage] && toggleLabels[currentLanguage][index]) {
+        label.textContent = toggleLabels[currentLanguage][index];
+      }
+    });
+    
+    // More text updates can be added here
   }
 
   // Get translated text
   function getTranslatedText(key) {
     const translations = {
       "Opening": {
-        "en": "Opening",
-        "ru": "Открываю"
-      },
-      "Recent apps would show here": {
-        "en": "Recent apps would show here",
-        "ru": "Здесь будут недавние приложения"
+        "ru": "Открываю",
+        "en": "Opening"
       }
     };
-
-    return translations[key]?.[currentLanguage] || key;
+    
+    return translations[key] && translations[key][currentLanguage] 
+      ? translations[key][currentLanguage] 
+      : key;
   }
 
-  // Get translated label from element
+  // Get translated label
   function getTranslatedLabel(element, defaultKey) {
-    if (element && element.getAttribute(`data-${currentLanguage}`)) {
-      return element.getAttribute(`data-${currentLanguage}`);
+    const translations = {
+      "Dark": {
+        "ru": "Тёмная тема",
+        "en": "Dark Mode"
+      }
+    };
+    
+    const text = element.textContent;
+    
+    for (const key in translations) {
+      if (translations[key]["en"] === defaultKey && 
+          (text === translations[key]["ru"] || text === translations[key]["en"])) {
+        return key;
+      }
     }
+    
     return defaultKey;
+  }
+
+  // Улучшенные обработчики навигационной панели
+  function setupNavigationHandlers() {
+    // Получаем кнопки
+    const backButton = document.querySelector('.nav-button:nth-child(1)');
+    const homeButton = document.querySelector('.nav-button:nth-child(2)');
+    const recentsButton = document.querySelector('.nav-button:nth-child(3)');
+    
+    if (!backButton || !homeButton || !recentsButton) return;
+    
+    // Добавляем классы для идентификации
+    backButton.classList.add('nav-button-back');
+    homeButton.classList.add('nav-button-home', 'home-button');
+    recentsButton.classList.add('nav-button-recents');
+    
+    // Обработчик для кнопки "Назад"
+    backButton.addEventListener('click', function() {
+      // Добавляем эффект нажатия
+      this.classList.add('nav-pressed');
+      setTimeout(() => this.classList.remove('nav-pressed'), 300);
+      
+      // Проверяем, какие экраны открыты и закрываем их в правильном порядке
+      const appScreen = document.querySelector('.app-screen');
+      const settingsScreen = document.querySelector('.settings-screen');
+      const aboutPhoneScreen = document.querySelector('.about-phone-screen');
+      const languageScreen = document.querySelector('.language-screen');
+      const notificationPanel = document.querySelector('.notification-panel');
+      
+      if (languageScreen && languageScreen.classList.contains('visible')) {
+        hideLanguageScreen();
+        AnimationHelper.showToast("Назад к настройкам");
+      } else if (aboutPhoneScreen && aboutPhoneScreen.classList.contains('visible')) {
+        hideAboutPhoneScreen();
+        AnimationHelper.showToast("Назад к настройкам");
+      } else if (settingsScreen && settingsScreen.classList.contains('visible')) {
+        hideSettingsScreen();
+        AnimationHelper.showToast("Назад на главный экран");
+      } else if (appScreen && appScreen.classList.contains('visible')) {
+        appScreen.classList.remove('visible');
+        AnimationHelper.showToast("Приложение закрыто");
+      } else if (notificationPanel && notificationPanel.classList.contains('visible')) {
+        notificationPanel.classList.remove('visible');
+      } else if (recentsManager && recentsManager.isVisible) {
+        recentsManager.hideRecents();
+        AnimationHelper.showToast("Недавние приложения закрыты");
+      }
+    });
+    
+    // Обработчик для кнопки "Домой"
+    homeButton.addEventListener('click', function() {
+      // Добавляем эффект нажатия
+      this.classList.add('nav-pressed');
+      setTimeout(() => this.classList.remove('nav-pressed'), 300);
+      
+      // Закрываем все открытые экраны
+      document.querySelectorAll('.visible').forEach(element => {
+        if (element.classList.contains('notification-panel') ||
+            element.classList.contains('settings-screen') ||
+            element.classList.contains('about-phone-screen') ||
+            element.classList.contains('language-screen') ||
+            element.classList.contains('app-screen')) {
+          element.classList.remove('visible');
+        }
+      });
+      
+      // Скрываем экран недавних приложений если он открыт
+      if (recentsManager && recentsManager.isVisible) {
+        recentsManager.hideRecents();
+      }
+      
+      // Показываем уведомление о переходе на главный экран
+      AnimationHelper.showToast("Главный экран");
+    });
+    
+    // Обработчик для кнопки "Недавние"
+    recentsButton.addEventListener('click', function() {
+      // Добавляем эффект нажатия
+      this.classList.add('nav-pressed');
+      setTimeout(() => this.classList.remove('nav-pressed'), 300);
+      
+      // Показываем/скрываем экран недавних приложений
+      if (recentsManager) {
+        recentsManager.toggleRecents();
+        
+        if (!recentsManager.isVisible) {
+          AnimationHelper.showToast("Недавние приложения");
+        }
+      }
+    });
+  }
+
+  // Получить имя приложения по ID
+  function getAppNameById(appId) {
+    const appNames = {
+      'calculator': 'Калькулятор',
+      'notes': 'Заметки',
+      'weather': 'Погода',
+      'settings': 'Настройки',
+      'camera': 'Камера',
+      'phone': 'Телефон',
+      'messages': 'Сообщения',
+      'chrome': 'Chrome',
+      'gmail': 'Gmail',
+      'maps': 'Карты',
+      'youtube': 'YouTube',
+      'photos': 'Фото',
+      'calendar': 'Календарь',
+      'clock': 'Часы',
+      'play-store': 'Play Маркет'
+    };
+    
+    return appNames[appId] || appId;
+  }
+  
+  // Получить иконку приложения по ID
+  function getAppIconById(appId) {
+    const appIcons = {
+      'calculator': 'calculate',
+      'notes': 'note',
+      'weather': 'cloud',
+      'settings': 'settings',
+      'camera': 'camera',
+      'phone': 'phone',
+      'messages': 'message',
+      'chrome': 'language',
+      'gmail': 'mail',
+      'maps': 'map',
+      'youtube': 'smart_display',
+      'photos': 'photo',
+      'calendar': 'calendar_today',
+      'clock': 'access_time',
+      'play-store': 'shop'
+    };
+    
+    return appIcons[appId] || 'android';
   }
 
   // Инициализация и настройка менеджеров
   function initializeManagers() {
+    // Создаем и добавляем контейнер для приложений если его еще нет
+    if (!document.querySelector('.app-screen')) {
+      const appScreen = document.createElement('div');
+      appScreen.className = 'app-screen';
+      document.querySelector('.android-phone').appendChild(appScreen);
+    }
+    
     // Инициализация менеджера приложений
     appManager = new AppManager();
+    window.appManager = appManager; // Делаем глобально доступным
     
     // Инициализация менеджера виджетов
     widgetManager = new WidgetManager();
@@ -403,6 +449,17 @@ document.addEventListener("DOMContentLoaded", function() {
     // Инициализация менеджера обоев
     wallpaperManager = new WallpaperManager();
     wallpaperManager.init();
+    
+    // Инициализация менеджера недавних приложений
+    recentsManager = new RecentsManager();
+    recentsManager.init();
+    
+    // Инициализация эффектов и анимаций
+    rippleEffect = new RippleEffect();
+    animationHelper = new AnimationHelper();
+    
+    // Настройка обработчиков навигационной панели
+    setupNavigationHandlers();
     
     // Активируем тёмный режим по умолчанию
     SettingsManager.setSetting('darkMode', true);
@@ -430,6 +487,11 @@ document.addEventListener("DOMContentLoaded", function() {
     if (wallpaperManager) {
       wallpaperManager.updateForDarkMode(true);
     }
+    
+    // Показываем приветственное сообщение при первой загрузке
+    setTimeout(() => {
+      AnimationHelper.showToast("Добро пожаловать в Android 11 Web!");
+    }, 1000);
   }
 
   // Initialize with Russian language

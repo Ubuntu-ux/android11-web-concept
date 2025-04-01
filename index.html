@@ -18,6 +18,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+  <link rel="stylesheet" href="src/styles/animations.css">
+  <link rel="stylesheet" href="src/styles/dev-app.css">
+  <link rel="stylesheet" href="src/styles/recents.css">
+  <script type="module" src="src/main.js"></script>
+  <script type="module" src="src/animations.js"></script>
 </head>
 <body>
   <div class="android-phone">
@@ -383,6 +388,10 @@
   <!-- App Screen (для отображения приложений) -->
   <div class="app-screen"></div>
 
-  <script src="src/main.js" type="module"></script>
+  <!-- Ripple Effect Container -->
+  <div id="ripple-container"></div>
+  
+  <!-- Swipe Indicator -->
+  <div class="swipe-indicator"></div>
 </body>
 </html>

@@ -1,0 +1,162 @@
+/* Development App Styles for Android 11 Web */
+
+.app-under-development {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background-color: var(--background-color);
+  color: var(--dark-text);
+  position: relative;
+}
+
+/* Dark mode styles */
+body.dark-mode .app-under-development {
+  background-color: var(--dark-background);
+  color: var(--dark-text-primary);
+}
+
+.dev-app-header {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  background-color: var(--primary-color);
+  color: white;
+  height: 56px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode .dev-app-header {
+  background-color: var(--dark-surface);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dev-app-header .app-back {
+  margin-right: 16px;
+  cursor: pointer;
+}
+
+.dev-app-header .app-title {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.dev-app-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  text-align: center;
+}
+
+.dev-app-icon {
+  width: 80px;
+  height: 80px;
+  background-color: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .dev-app-icon {
+  background-color: var(--dark-primary);
+}
+
+.dev-app-icon .material-icons-round {
+  font-size: 40px;
+  color: white;
+}
+
+body.dark-mode .dev-app-icon .material-icons-round {
+  color: #000;
+}
+
+.dev-app-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+
+.dev-app-message {
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: var(--medium-text);
+}
+
+body.dark-mode .dev-app-message {
+  color: var(--dark-text-secondary);
+}
+
+.dev-app-details {
+  font-size: 14px;
+  margin-bottom: 32px;
+  color: var(--medium-text);
+  max-width: 320px;
+  line-height: 1.5;
+}
+
+body.dark-mode .dev-app-details {
+  color: var(--dark-text-secondary);
+}
+
+.dev-app-actions {
+  margin-top: 16px;
+}
+
+.dev-app-button {
+  padding: 12px 24px;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .dev-app-button {
+  background-color: var(--dark-primary);
+  color: #000;
+}
+
+.dev-app-button:active {
+  transform: scale(0.95);
+  background-color: #3b78e7;
+}
+
+body.dark-mode .dev-app-button:active {
+  background-color: #9866da;
+}
+
+/* Toast notification styles */
+.toast {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 10000;
+  min-width: 200px;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .toast {
+  background-color: var(--dark-surface);
+  color: var(--dark-text-primary);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+} 
