@@ -1,5 +1,14 @@
 // Android 11 Web Interface - Main JavaScript
 import icons from './assets/icons.js';
+import AppManager from './apps/app-manager.js';
+import WidgetManager from './widgets.js';
+import WallpaperManager from './wallpapers.js';
+import { SettingsManager } from './utils.js';
+
+// Глобальные переменные для доступа к менеджерам
+let appManager;
+let widgetManager;
+let wallpaperManager;
 
 document.addEventListener("DOMContentLoaded", function() {
   // Get DOM elements
@@ -13,6 +22,9 @@ document.addEventListener("DOMContentLoaded", function() {
   const quickToggles = document.querySelectorAll(".quick-toggle");
   const appIcons = document.querySelectorAll(".app-icon");
   const navigationButtons = document.querySelectorAll(".nav-button");
+
+  // Инициализируем менеджеры
+  initializeManagers();
 
   // Current language (default is Russian)
   let currentLanguage = 'ru';
@@ -134,6 +146,12 @@ document.addEventListener("DOMContentLoaded", function() {
       // Special handling for settings app
       if (appId === "settings" || this.id === "settings-app") {
         showSettingsScreen();
+        return;
+      }
+
+      // Проверяем, является ли нажатое приложение одним из наших специальных приложений
+      if (["calculator", "notes", "weather"].includes(appId) && appManager) {
+        appManager.launchApp(appId);
         return;
       }
 
@@ -366,6 +384,51 @@ document.addEventListener("DOMContentLoaded", function() {
       return element.getAttribute(`data-${currentLanguage}`);
     }
     return defaultKey;
+  }
+
+  // Инициализация и настройка менеджеров
+  function initializeManagers() {
+    // Инициализация менеджера приложений
+    appManager = new AppManager();
+    
+    // Инициализация менеджера виджетов
+    widgetManager = new WidgetManager();
+    widgetManager.init();
+    
+    // Инициализация менеджера обоев
+    wallpaperManager = new WallpaperManager();
+    wallpaperManager.init();
+    
+    // Настройка слушателя для темного режима
+    const darkModeToggle = document.querySelector('.quick-toggle:nth-child(2):nth-of-type(2)');
+    if (darkModeToggle) {
+      darkModeToggle.addEventListener('click', function() {
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        
+        // Сохранить настройку темного режима
+        SettingsManager.setSetting('darkMode', isDarkMode);
+        
+        // Обновить обои при изменении темы
+        if (wallpaperManager) {
+          wallpaperManager.updateForDarkMode(isDarkMode);
+        }
+      });
+    }
+    
+    // Загрузить сохраненные настройки темного режима
+    const settings = SettingsManager.getSettings();
+    if (settings.darkMode) {
+      document.body.classList.add('dark-mode');
+      const darkModeToggle = document.querySelector('.quick-toggle:nth-child(6)');
+      if (darkModeToggle) {
+        darkModeToggle.classList.add('active');
+      }
+      
+      // Обновить обои при загрузке в темном режиме
+      if (wallpaperManager) {
+        wallpaperManager.updateForDarkMode(true);
+      }
+    }
   }
 
   // Initialize with Russian language

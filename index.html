@@ -11,6 +11,9 @@
   <link rel="stylesheet" href="src/styles/notification.css">
   <link rel="stylesheet" href="src/styles/quick-settings.css">
   <link rel="stylesheet" href="src/styles/settings.css">
+  <link rel="stylesheet" href="src/styles/apps.css">
+  <link rel="stylesheet" href="src/styles/widgets.css">
+  <link rel="stylesheet" href="src/styles/wallpapers.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -198,6 +201,26 @@
           </div>
           <div class="app-name" data-en="Photos" data-ru="Фото">Фото</div>
         </div>
+
+        <!-- Row 4 - Наши приложения -->
+        <div class="app-icon">
+          <div class="app-icon-img" id="calculator">
+            <span class="material-icons-round">calculate</span>
+          </div>
+          <div class="app-name" data-en="Calculator" data-ru="Калькулятор">Калькулятор</div>
+        </div>
+        <div class="app-icon">
+          <div class="app-icon-img" id="notes">
+            <span class="material-icons-round">note</span>
+          </div>
+          <div class="app-name" data-en="Notes" data-ru="Заметки">Заметки</div>
+        </div>
+        <div class="app-icon">
+          <div class="app-icon-img" id="weather">
+            <span class="material-icons-round">cloud</span>
+          </div>
+          <div class="app-name" data-en="Weather" data-ru="Погода">Погода</div>
+        </div>
       </div>
 
       <!-- Dock -->
@@ -208,18 +231,18 @@
           </div>
         </div>
         <div class="app-icon">
-          <div class="app-icon-img" id="messages-dock">
-            <span class="material-icons-round">chat</span>
+          <div class="app-icon-img" id="calculator-dock">
+            <span class="material-icons-round">calculate</span>
           </div>
         </div>
         <div class="app-icon">
-          <div class="app-icon-img" id="chrome-dock">
-            <span class="material-icons-round">public</span>
+          <div class="app-icon-img" id="notes-dock">
+            <span class="material-icons-round">note</span>
           </div>
         </div>
         <div class="app-icon">
-          <div class="app-icon-img" id="camera-dock">
-            <span class="material-icons-round">camera_alt</span>
+          <div class="app-icon-img" id="weather-dock">
+            <span class="material-icons-round">cloud</span>
           </div>
         </div>
         <div class="app-icon">
@@ -356,6 +379,9 @@
       </div>
     </div>
   </div>
+
+  <!-- App Screen (для отображения приложений) -->
+  <div class="app-screen"></div>
 
   <script src="src/main.js" type="module"></script>
 </body>
